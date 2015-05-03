@@ -35,7 +35,6 @@ public class Player_Script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playerRigidBody = this.GetComponent<Rigidbody2D>();
-		
 		grapple = GetComponent<SpringJoint2D> ();
 		grapple.enabled = false;
 		rope = GetComponent<LineRenderer> ();
@@ -49,7 +48,6 @@ public class Player_Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//endVertex = Input.mousePosition;
-		
 		if (Input.GetMouseButtonDown (0))
 		{
 			Vector3 v = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;

@@ -27,6 +27,7 @@ public class LevelManager : MonoBehaviour {
 
 	public IEnumerator RespawnPlayerCo(){
 		player.letGo ();
+		player.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
 		Instantiate (deathParticle, player.transform.position, player.transform.rotation);
 		player.enabled = false;
 		player.GetComponent<Renderer> ().enabled = false;
