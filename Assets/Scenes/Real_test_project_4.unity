@@ -164,7 +164,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 155058929}
   - 212: {fileID: 155058928}
-  - 114: {fileID: 155058930}
   - 114: {fileID: 155058931}
   - 120: {fileID: 155058932}
   - 50: {fileID: 155058934}
@@ -217,19 +216,6 @@ Transform:
   - {fileID: 1096741842}
   m_Father: {fileID: 0}
   m_RootOrder: 4
---- !u!114 &155058930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 155058927}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8105f31e1afeba4cb12d9c9d9f15e78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sightStart: {fileID: 0}
-  sightEnd: {fileID: 0}
 --- !u!114 &155058931
 MonoBehaviour:
   m_ObjectHideFlags: 0
