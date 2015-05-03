@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Player_Script : MonoBehaviour {
@@ -116,12 +116,8 @@ public class Player_Script : MonoBehaviour {
 		
 		// Til að sleppa takinu a grappling hook'inum
 		else if (Input.GetMouseButtonUp (0)) {
-			Debug.Log ("Released");
-			isGrappled = false;
-			rope.enabled = false;
-			grapple.enabled = false;
-			wasGrappled = true;
-		} 
+			letGo();
+		}
 		
 		else
 		{
@@ -180,5 +176,13 @@ public class Player_Script : MonoBehaviour {
 			}
 			
 		}
+	}
+
+	public void letGo(){
+		Debug.Log ("Released");
+		isGrappled = false;
+		rope.enabled = false;
+		grapple.enabled = false;
+		wasGrappled = true;
 	}
 }
