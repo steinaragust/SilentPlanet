@@ -132,8 +132,18 @@ public class Player_Script : MonoBehaviour {
 
 			//if(grounded == true)
 			//{
-				float move = Input.GetAxisRaw("Horizontal");
-				playerRigidBody.velocity = new Vector2(move * 2.5f, playerRigidBody.velocity.y);
+				if (Input.GetKey (KeyCode.D)){
+					//Debug.Log("SPACE is pressed");
+					playerRigidBody.velocity = new Vector2(2.5f, playerRigidBody.velocity.y);
+				}
+				// Swing left on rope
+				if (Input.GetKey (KeyCode.A)){
+					//Debug.Log("SPACE is pressed");
+					playerRigidBody.velocity = new Vector2(-2.5f, playerRigidBody.velocity.y);
+				}
+				
+				//float move = Input.GetAxisRaw("Horizontal");
+				//playerRigidBody.velocity = new Vector2(move * 2.5f, playerRigidBody.velocity.y);
 
 				if (Input.GetKeyDown (KeyCode.Space)) // && camJump == true
 				{
