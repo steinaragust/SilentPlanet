@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a30d0b0e1afd8ab4ea8a4a0290404f59
-timeCreated: 1430675841
+guid: 1ddccd406ab0c3c48915c13c285ce905
+timeCreated: 1430675550
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: GrassThinSprite_0
+    21300000: GPJ_2D_Platformer_Sprites_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -31,7 +31,7 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -44,22 +44,22 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: GrassThinSprite_0
+    - name: GPJ_2D_Platformer_Sprites_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 126
+        x: 17
+        y: 80
+        width: 14
+        height: 12
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 126}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
