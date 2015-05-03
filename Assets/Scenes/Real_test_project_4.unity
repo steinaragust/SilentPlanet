@@ -241,6 +241,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 65536
+  canJump: 0
   rope: {fileID: 0}
   grapple: {fileID: 0}
   hitPosition: {x: 0, y: 0, z: 0}

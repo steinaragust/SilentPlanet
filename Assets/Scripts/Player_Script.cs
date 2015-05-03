@@ -16,6 +16,8 @@ public class Player_Script : MonoBehaviour {
 	public Transform endPos;
 	public LayerMask groundLayer;
 
+	public bool canJump = false;
+
 	private Vector3 mousePos;
 
 	public LineRenderer rope;
@@ -123,6 +125,7 @@ public class Player_Script : MonoBehaviour {
 			if (hitInfo.collider != null)
 			{
 				Debug.Log("Grounded");
+				canJump = true;
 				grounded = true;
 			}
 			else
@@ -130,27 +133,27 @@ public class Player_Script : MonoBehaviour {
 				grounded = false;
 			}
 
-			//if(grounded == true)
-			//{
-				if (Input.GetKey (KeyCode.D)){
-					//Debug.Log("SPACE is pressed");
-					playerRigidBody.velocity = new Vector2(2.5f, playerRigidBody.velocity.y);
-				}
-				// Swing left on rope
-				if (Input.GetKey (KeyCode.A)){
-					//Debug.Log("SPACE is pressed");
-					playerRigidBody.velocity = new Vector2(-2.5f, playerRigidBody.velocity.y);
-				}
-				
-				//float move = Input.GetAxisRaw("Horizontal");
-				//playerRigidBody.velocity = new Vector2(move * 2.5f, playerRigidBody.velocity.y);
 
-				if (Input.GetKeyDown (KeyCode.Space)) // && camJump == true
-				{
+			if (Input.GetKey (KeyCode.D)){
+				//Debug.Log("SPACE is pressed");
+				playerRigidBody.velocity = new Vector2(4, playerRigidBody.velocity.y);
+			}
+			// Swing left on rope
+			if (Input.GetKey (KeyCode.A)){
+				//Debug.Log("SPACE is pressed");
+				playerRigidBody.velocity = new Vector2(-4, playerRigidBody.velocity.y);
+			}
+				
+			//float move = Input.GetAxisRaw("Horizontal");
+			//playerRigidBody.velocity = new Vector2(move * 2.5f, playerRigidBody.velocity.y);
+
+			if (Input.GetKeyDown (KeyCode.Space) && canJump == true) // && camJump == true
+			{
 					
-					playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 6);
-					grounded = false;
-				}
+				playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 6);
+				grounded = false;
+				canJump = false;
+			}
 			//}
 			/*else {
 				if (Input.GetKey (KeyCode.D)){
