@@ -28,6 +28,7 @@ public class LevelManager : MonoBehaviour {
 	public IEnumerator RespawnPlayerCo(){
 		player.letGo ();
 		player.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
+		player.GetComponent<Rigidbody2D> ().gravityScale = 0;
 		Instantiate (deathParticle, player.transform.position, player.transform.rotation);
 		player.enabled = false;
 		player.GetComponent<Renderer> ().enabled = false;
@@ -35,6 +36,7 @@ public class LevelManager : MonoBehaviour {
 		yield return new WaitForSeconds (respawnDelay);
 		player.enabled = true;
 		player.GetComponent<Renderer> ().enabled = true;
+		player.GetComponent<Rigidbody2D> ().gravityScale = 0.75f;
 		player.transform.position = currentCheckpoint.transform.position;
 		Instantiate (respawnParticle, currentCheckpoint.transform.position, currentCheckpoint.transform.rotation);
 	}

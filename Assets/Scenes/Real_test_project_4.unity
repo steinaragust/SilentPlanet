@@ -120,6 +120,7 @@ Transform:
   - {fileID: 1090602235}
   - {fileID: 754043990}
   - {fileID: 1855683589}
+  - {fileID: 615641044}
   m_Father: {fileID: 0}
   m_RootOrder: 10
 --- !u!1001 &20080179
@@ -958,6 +959,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &615641044 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+  m_PrefabInternal: {fileID: 1903318279}
 --- !u!1001 &717894610
 Prefab:
   m_ObjectHideFlags: 0
@@ -2036,6 +2041,85 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
   m_PrefabInternal: {fileID: 129157229}
+--- !u!1001 &1903318279
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 13196151}
+    m_Modifications:
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.57999992
+      objectReference: {fileID: 0}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.70000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11482950, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 2087714380}
+    - target: {fileID: 21292896, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300008, guid: 9ac062a8904289d469d6567f8c210d1d,
+        type: 3}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 489458, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.29999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156260, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_Size.x
+      value: .959818542
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156260, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_Size.y
+      value: 1.1648519
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156260, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_Offset.y
+      value: -.158697456
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156260, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_Offset.x
+      value: -.0046865074
+      objectReference: {fileID: 0}
+    - target: {fileID: 140812, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+      propertyPath: m_Name
+      value: Spikes 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5f8ae3700048433429f5ccd6cff127dd, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2005688407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,4 +2390,4 @@ MonoBehaviour:
   currentCheckpoint: {fileID: 1396098820}
   deathParticle: {fileID: 159014, guid: c83c289852df2bb448908cee4cbc3af6, type: 2}
   respawnParticle: {fileID: 143374, guid: 53709503b93d36647ac1aa2f208d77e6, type: 2}
-  respawnDelay: 1
+  respawnDelay: 1.5
