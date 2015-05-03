@@ -121,7 +121,7 @@ public class Player_Script : MonoBehaviour {
 		else
 		{
 			Debug.Log("STANDARD MOVE is RUN");
-			RaycastHit2D hitInfo = Physics2D.Linecast(startPos.position, endPos.position, groundLayer.value);
+			RaycastHit2D hitInfo = Physics2D.Linecast(startPos.position, endPos.position);
 			if (hitInfo.collider != null)
 			{
 				Debug.Log("Grounded");
