@@ -150,7 +150,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 52016360}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.9499998, y: 0, z: 0}
+  m_LocalPosition: {x: 13.1599998, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -235,7 +235,9 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 13e115ec5455ab147a585370accbf4df, type: 2}
   maxRopeLength: 5
   normalMoveSpeed: 6
+  maxMoveSpeed: 5
   grounded: 0
+  wasGrappled: 0
   startPos: {fileID: 2019578758}
   endPos: {fileID: 1096741842}
   groundLayer:

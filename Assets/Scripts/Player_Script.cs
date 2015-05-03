@@ -10,7 +10,11 @@ public class Player_Script : MonoBehaviour {
 
 	public float maxRopeLength = 5;
 	public float normalMoveSpeed = 6;
+
+	public float maxMoveSpeed = 2;
 	public bool grounded = false;
+
+	public bool wasGrappled = false;
 
 	public Transform startPos;
 	public Transform endPos;
@@ -84,12 +88,12 @@ public class Player_Script : MonoBehaviour {
 			// Swing right on rope
 			if (Input.GetKey (KeyCode.D)){
 				//Debug.Log("SPACE is pressed");
-				playerRigidBody.AddForce(new Vector2(1.25f,0));
+				playerRigidBody.AddForce(new Vector2(2.35f,0));
 			}
 			// Swing left on rope
 			if (Input.GetKey (KeyCode.A)){
 				//Debug.Log("SPACE is pressed");
-				playerRigidBody.AddForce(new Vector2(-1.25f,0));
+				playerRigidBody.AddForce(new Vector2(-2.35f,0));
 			}
 
 			if(Input.GetKey(KeyCode.W))
@@ -116,6 +120,7 @@ public class Player_Script : MonoBehaviour {
 			isGrappled = false;
 			rope.enabled = false;
 			grapple.enabled = false;
+			wasGrappled = true;
 		} 
 
 		else
@@ -131,19 +136,38 @@ public class Player_Script : MonoBehaviour {
 			else
 			{
 				grounded = false;
+				canJump = false;
+			}
+			
+			float move = Input.GetAxisRaw ("Horizontal");
+			if (grounded == true) {
+				playerRigidBody.velocity = new Vector2 (move * 3, playerRigidBody.velocity.y);
+			} 
+			// in air movement
+			if(wasGrappled == true) {
+				if ((Input.GetKey (KeyCode.D) || (Input.GetKey (KeyCode.A))) && (playerRigidBody.velocity.magnitude <= maxMoveSpeed))
+				{
+					Debug.Log("D is pressed");
+					playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x + (move * 0.35f), playerRigidBody.velocity.y);
+				}
+				wasGrappled = false;
+				// Swing left on rope
+				/*if (Input.GetKey (KeyCode.A)&& (playerRigidBody.velocity <= maxMoveSpeed)){
+					Debug.Log("A is pressed");
+					//playerRigidBody.velocity = new Vector2(move*2.5f, playerRigidBody.velocity.y);
+					playerRigidBody.velocity = new Vector2(playerRigidBody.velocity + move * 1.5f , playerRigidBody.velocity.y);
+				}*/
 			}
 
+			else
+			{
+				if ((Input.GetKey (KeyCode.D)) || (Input.GetKey (KeyCode.A)))
+				{
+					Debug.Log("D is pressed");
+					playerRigidBody.velocity = new Vector2(move * 3, playerRigidBody.velocity.y);
+				}
+			}
 
-			if (Input.GetKey (KeyCode.D)){
-				//Debug.Log("SPACE is pressed");
-				playerRigidBody.velocity = new Vector2(4, playerRigidBody.velocity.y);
-			}
-			// Swing left on rope
-			if (Input.GetKey (KeyCode.A)){
-				//Debug.Log("SPACE is pressed");
-				playerRigidBody.velocity = new Vector2(-4, playerRigidBody.velocity.y);
-			}
-				
 			//float move = Input.GetAxisRaw("Horizontal");
 			//playerRigidBody.velocity = new Vector2(move * 2.5f, playerRigidBody.velocity.y);
 
@@ -154,34 +178,7 @@ public class Player_Script : MonoBehaviour {
 				grounded = false;
 				canJump = false;
 			}
-			//}
-			/*else {
-				if (Input.GetKey (KeyCode.D)){
-					//Debug.Log("SPACE is pressed");
-					playerRigidBody.AddForce(new Vector2(3.25f,0));
-				}
 
-				if (Input.GetKey (KeyCode.A)){
-					//Debug.Log("SPACE is pressed");
-					playerRigidBody.AddForce(new Vector2(-3.25f,0));
-				}
-			}*/
-			/*
-			Debug.Log("STANDARD MOVE is RUN");
-			float move = Input.GetAxisRaw("Horizontal");
-
-			//playerRigidBody.velocity = new Vector2(move * 2.5f, playerRigidBody.velocity.y);
-
-			//playerRigidBody.velocity = playerRigidBody.velocity + new Vector2(move * 0.2f, playerRigidBody.velocity.y);
-		
-
-			if (Input.GetKeyDown (KeyCode.Space)) // && camJump == true
-			{
-
-				playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 4);
-				//canJump = false;
-			}
-			*/
 		}
 	}
 }
