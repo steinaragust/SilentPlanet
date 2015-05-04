@@ -15,6 +15,10 @@ public class Camera_Script : MonoBehaviour {
 //		the_player = FindObjectOfType<Player_Script> ();
 		isFollowing = true;
 	}
+
+	void Awake (){
+		//Cursor.visible = false; // turn off cursor visibility
+	}
 	
 	// Update is called once per frame
 	void Update () {
