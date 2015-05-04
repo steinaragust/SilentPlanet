@@ -10,11 +10,15 @@ public class LevelManager : MonoBehaviour {
 	public GameObject respawnParticle;
 
 	public float respawnDelay;
-	private float gravityStore;
+	private Camera_Script camera;
+
+	public HealthManager healthManager;
 
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<Player_Script> ();
+		camera = FindObjectOfType<Camera_Script> ();
+		healthManager = FindObjectOfType<HealthManager> ();
 	}
 	
 	// Update is called once per frame
@@ -28,18 +32,18 @@ public class LevelManager : MonoBehaviour {
 
 	public IEnumerator RespawnPlayerCo(){
 		player.letGo ();
-		player.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0);
-		gravityStore = player.GetComponent<Rigidbody2D> ().gravityScale;
-		player.GetComponent<Rigidbody2D> ().gravityScale = 0;
 		Instantiate (deathParticle, player.transform.position, player.transform.rotation);
 		player.enabled = false;
 		player.GetComponent<Renderer> ().enabled = false;
+		camera.isFollowing = false;
 		Debug.Log ("Player respawn here!");
 		yield return new WaitForSeconds (respawnDelay);
+		player.transform.position = currentCheckpoint.transform.position;	
 		player.enabled = true;
 		player.GetComponent<Renderer> ().enabled = true;
-		player.GetComponent<Rigidbody2D> ().gravityScale = gravityStore;
-		player.transform.position = currentCheckpoint.transform.position;
+		healthManager.FullHealth ();
+		healthManager.isDead = false;
+		camera.isFollowing = true;
 		Instantiate (respawnParticle, currentCheckpoint.transform.position, currentCheckpoint.transform.rotation);
 	}
 }

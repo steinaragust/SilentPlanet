@@ -606,6 +606,10 @@ Prefab:
       propertyPath: m_Name
       value: Energy 4
       objectReference: {fileID: 0}
+    - target: {fileID: 159646, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
   m_IsPrefabParent: 0
@@ -617,7 +621,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 316849632}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Energy's
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1058,6 +1062,10 @@ Prefab:
     - target: {fileID: 159646, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
       propertyPath: m_Name
       value: Energy 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 159646, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
@@ -1665,6 +1673,34 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 166992, guid: 1c7fdfafd41c5fb479c28c93b709aa80, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 149652, guid: 1c7fdfafd41c5fb479c28c93b709aa80, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 121778, guid: 1c7fdfafd41c5fb479c28c93b709aa80, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 118830, guid: 1c7fdfafd41c5fb479c28c93b709aa80, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 116496, guid: 1c7fdfafd41c5fb479c28c93b709aa80, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 102324, guid: 1c7fdfafd41c5fb479c28c93b709aa80, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100630, guid: 1c7fdfafd41c5fb479c28c93b709aa80, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c7fdfafd41c5fb479c28c93b709aa80, type: 2}
   m_IsPrefabParent: 0
@@ -1979,6 +2015,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 159646, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
   m_IsPrefabParent: 0
@@ -2264,18 +2304,6 @@ Prefab:
     - target: {fileID: 442824, guid: 87803c84c5082044b92390d465fcd762, type: 2}
       propertyPath: m_RootOrder
       value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 6123154, guid: 87803c84c5082044b92390d465fcd762, type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6123154, guid: 87803c84c5082044b92390d465fcd762, type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6174666, guid: 87803c84c5082044b92390d465fcd762, type: 2}
-      propertyPath: m_IsTrigger
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87803c84c5082044b92390d465fcd762, type: 2}
@@ -2922,6 +2950,10 @@ Prefab:
       propertyPath: m_Name
       value: Energy 2
       objectReference: {fileID: 0}
+    - target: {fileID: 159646, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}
   m_IsPrefabParent: 0
@@ -3374,6 +3406,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   the_player: {fileID: 1551703252}
+  isFollowing: 0
+  xOffset: 0
+  yOffset: 0
 --- !u!4 &2029551260 stripped
 Transform:
   m_PrefabParentObject: {fileID: 401832, guid: 701d461b00d824d4d9ca702dfeb87b8a, type: 2}

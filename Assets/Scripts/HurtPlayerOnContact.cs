@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class KillPlayer : MonoBehaviour {
+public class HurtPlayerOnContact : MonoBehaviour {
 
-	public LevelManager levelManager;
+	public int damageToGive;
 
 	// Use this for initialization
 	void Start () {
-		levelManager = FindObjectOfType<LevelManager> ();
+	
 	}
 	
 	// Update is called once per frame
@@ -17,7 +17,7 @@ public class KillPlayer : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.name == "Player_Bird") {
-			levelManager.RespawnPlayer();
+			HealthManager.HurtPlayer(damageToGive);
 		}
 	}
 }
