@@ -7,7 +7,8 @@ public class Player_Script : MonoBehaviour {
 	public LayerMask grappleLayer;
 	public bool isGrappled = false;
 	public Material mat;
-	
+
+	public float jumpHeight;
 	public float maxRopeLength = 5;
 	public float normalMoveSpeed = 6;
 	
@@ -168,7 +169,7 @@ public class Player_Script : MonoBehaviour {
 			if (Input.GetKeyDown (KeyCode.Space) && canJump == true) // && camJump == true
 			{
 				
-				playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, 6);
+				playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpHeight);
 				grounded = false;
 				canJump = false;
 			}
