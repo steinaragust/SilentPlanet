@@ -11,6 +11,7 @@ TagManager:
   - Scenery
   - Damager
   - GrappleHit
+  - Wall
   layers:
   - Default
   - TransparentFX
