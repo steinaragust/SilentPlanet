@@ -9,6 +9,10 @@ public class Camera_Script : MonoBehaviour {
 	void Start () {
 	
 	}
+
+	void Awake (){
+		//Cursor.visible = false; // turn off cursor visibility
+	}
 	
 	// Update is called once per frame
 	void Update () {
