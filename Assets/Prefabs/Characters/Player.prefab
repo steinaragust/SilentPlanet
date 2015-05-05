@@ -359,6 +359,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 65536
+  knockBack: 5
+  knockBackLength: .200000003
+  knockBackCount: 0
+  knockFromRight: 0
 --- !u!120 &12054356
 LineRenderer:
   m_ObjectHideFlags: 1

@@ -14,17 +14,24 @@ public class EnemyPatrol : MonoBehaviour {
 	private bool notAtEdge;
 	public Transform edgeCheck;
 
+	public bool stunned;
+
+	public float howLongStunned;
+	public float stunnedFor;
+
 	// Use this for initialization
 	void Start () {
-		
+		stunned = false;
 	}
 	// Update is called once per frame
 
 	//
 	void Update () {
-
+		if (stunnedFor > 0 && stunned) {
+			stunnedFor -= Time.deltaTime;
+			return;
+		} 
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, WhatIsWall);
-
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallCheckRadius, WhatIsWall);
 
 		if (hittingWall || !notAtEdge) {
@@ -38,6 +45,14 @@ public class EnemyPatrol : MonoBehaviour {
 		else {
 			transform.localScale = new Vector3(1f, 1f, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		//knockBackCount -= Time.deltaTime;
+		if (other.name == "Trap") {
+			stunned = true;
+			stunnedFor = howLongStunned;
 		}
 	}
 }

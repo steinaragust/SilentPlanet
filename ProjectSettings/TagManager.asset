@@ -12,6 +12,7 @@ TagManager:
   - Damager
   - GrappleHit
   - Wall
+  - TrapsForEnemys
   layers:
   - Default
   - TransparentFX
@@ -33,7 +34,7 @@ TagManager:
   - Projectiles
   - Checkpoint
   - Collectibles
-  - 
+  - TrapsForEnemys
   - 
   - 
   - 
