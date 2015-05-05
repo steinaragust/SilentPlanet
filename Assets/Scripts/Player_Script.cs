@@ -33,7 +33,13 @@ public class Player_Script : MonoBehaviour {
 	private GameObject hitObject; // The object that is grappled to
 	
 	private Rigidbody2D playerRigidBody;
-	
+
+	//BÆTT INN!!!!
+	public float knockBack;
+	public float knockBackLength;
+	public float knockBackCount;
+	public bool knockFromRight;
+
 	//private float move; // The horizontal movement input by the player's controls
 	
 	// Use this for initialization
@@ -180,7 +186,18 @@ public class Player_Script : MonoBehaviour {
 	
 	public void normalPlayerMovement(float move)
 	{
-		playerRigidBody.velocity = new Vector2 (move * moveSpeed, playerRigidBody.velocity.y);
+		if (knockBackCount <= 0) {
+			playerRigidBody.velocity = new Vector2 (move * moveSpeed, playerRigidBody.velocity.y);
+		} 
+		else {
+			if(knockFromRight){
+				playerRigidBody.velocity = new Vector2 (-knockBack, knockBack);
+			}
+			else{
+				playerRigidBody.velocity = new Vector2 (knockBack, knockBack);
+			}
+			knockBackCount -= Time.deltaTime;
+		}
 	}
 	
 	public void afterBeingGrappledMovement(float move)

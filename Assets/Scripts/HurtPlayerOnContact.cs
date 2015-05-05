@@ -16,8 +16,17 @@ public class HurtPlayerOnContact : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.name == "Player_Bird") {
+		if (other.name == "Player_Bird" && HealthManager.playerHealth > 0) {
 			HealthManager.HurtPlayer(damageToGive);
+			other.GetComponent<AudioSource>().Play();
+			var player = other.GetComponent<Player_Script>();
+			player.knockBackCount = player.knockBackLength;
+			if(other.transform.position.x < transform.position.x){
+				player.knockFromRight = true;
+			}
+			else{
+				player.knockFromRight = false;
+			}
 		}
 	}
 }

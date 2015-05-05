@@ -9,7 +9,6 @@ public class EnergyManager : MonoBehaviour {
 
 	void Start(){
 		text = GetComponent<Text> ();
-
 		energy = 0;
 	}
 
