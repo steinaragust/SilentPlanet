@@ -119,7 +119,6 @@ public class Player_Script : MonoBehaviour {
 		
 		if(hit.collider != null) // true when we hit a grapplable surface
 		{
-			Debug.Log("IT HIT!!!");
 			hitPosition = hit.point; // Saves the hit position
 			
 			// Moves the grapplable object to the hit position
