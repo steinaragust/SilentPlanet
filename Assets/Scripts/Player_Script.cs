@@ -125,6 +125,7 @@ public class Player_Script : MonoBehaviour {
 		
 		if(hit.collider != null) // true when we hit a grapplable surface
 		{
+			Debug.Log("IT HIT!!!");
 			hitPosition = hit.point; // Saves the hit position
 			
 			// Moves the grapplable object to the hit position
@@ -185,6 +186,7 @@ public class Player_Script : MonoBehaviour {
 	
 	public void normalPlayerMovement(float move)
 	{
+		//BÆTT INN!!!!!!
 		if (knockBackCount <= 0) {
 			playerRigidBody.velocity = new Vector2 (move * moveSpeed, playerRigidBody.velocity.y);
 		} 
@@ -211,5 +213,11 @@ public class Player_Script : MonoBehaviour {
 	{
 		playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpHeight);
 		grounded = false;
+	}
+
+	void OnCollisionEnter2D(Collision2D other){
+		if (other.gameObject.tag == "Wall" && !grounded) {
+			playerRigidBody.velocity = new Vector2 (knockBack, knockBack);
+		}
 	}
 }

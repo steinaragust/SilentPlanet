@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 423160}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EdgeCheck
   m_TagString: Untagged
   m_Icon: {fileID: 2270504221434485236, guid: 0000000000000000d000000000000000, type: 0}
@@ -23,7 +23,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 427618}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: -5082302936091411984, guid: 0000000000000000d000000000000000, type: 0}
@@ -44,7 +44,7 @@ GameObject:
   - 114: {fileID: 11481516}
   - 61: {fileID: 6118702}
   - 114: {fileID: 11475908}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186924}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.2299995, y: 0, z: 0}
+  m_LocalPosition: {x: -13.7592163, y: .871862769, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 427618}
@@ -149,6 +149,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   edgeCheck: {fileID: 423160}
+  stunned: 0
+  howLongStunned: 3
+  stunnedFor: 0
 --- !u!114 &11481516
 MonoBehaviour:
   m_ObjectHideFlags: 1
