@@ -64,12 +64,12 @@ public class Player_Script : MonoBehaviour {
 	void Update () {
 		// -----------------------------------------
 		// called if the left-mousebutton is pressed
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) || Input.GetButtonDown("Fire2")) {
 			shootGrapplingHook();
 		}
 		
 		// If you are grappling a surface and you are holding down the left mouse button
-		else if(Input.GetMouseButton(0) && (isGrappled == true)) {
+		else if((Input.GetMouseButton(0) || Input.GetButtonDown ("Fire2")) && isGrappled) {
 			movementWhileGrappled();
 		}
 		
@@ -107,7 +107,7 @@ public class Player_Script : MonoBehaviour {
 			}
 			
 			//--Main jump code--
-			if (Input.GetKeyDown (KeyCode.Space) && (grounded == true)) {
+			if ((Input.GetKeyDown (KeyCode.Space) || Input.GetButtonDown("Fire1")) && grounded) {
 				mainJump();
 			}
 		}
