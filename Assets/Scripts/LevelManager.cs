@@ -38,7 +38,8 @@ public class LevelManager : MonoBehaviour {
 		camera.isFollowing = false;
 		Debug.Log ("Player respawn here!");
 		yield return new WaitForSeconds (respawnDelay);
-		player.transform.position = currentCheckpoint.transform.position;	
+		player.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0f, 0f);
+		player.transform.position = currentCheckpoint.transform.position;
 		player.enabled = true;
 		player.GetComponent<Renderer> ().enabled = true;
 		healthManager.FullHealth ();

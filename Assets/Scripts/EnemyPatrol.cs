@@ -31,6 +31,9 @@ public class EnemyPatrol : MonoBehaviour {
 			stunnedFor -= Time.deltaTime;
 			return;
 		} 
+		else {
+			stunned = false;
+		}
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, WhatIsWall);
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallCheckRadius, WhatIsWall);
 
@@ -50,7 +53,7 @@ public class EnemyPatrol : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		//knockBackCount -= Time.deltaTime;
-		if (other.name == "Trap") {
+		if (other.tag == "TrapsForEnemys") {
 			stunned = true;
 			stunnedFor = howLongStunned;
 		}

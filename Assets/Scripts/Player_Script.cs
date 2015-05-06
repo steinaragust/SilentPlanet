@@ -16,13 +16,18 @@ public class Player_Script : MonoBehaviour {
 	public float afterBeingGrappledAirMovement = 0.35f;
 	
 	public float maxMoveSpeed = 2;
-	public bool grounded = false; // Checks if the player is touching the ground (also used to see if we can jump)
+
+	//BÆTT INN, AÐFERÐ 2 FYRIR GROUNDCHECK
+	public Transform groundCheck;
+	public float groundCheckRadius;
+	public LayerMask whatIsGround;
+	private bool grounded;
 	
 	private bool wasGrappled = false;
 	
-	public Transform startPos; // for casting rays to see if we are grounded
-	public Transform endPos;   // -------------------""---------------------
-	public LayerMask groundLayer; // The ground layer
+//	public Transform startPos; // for casting rays to see if we are grounded
+//	public Transform endPos;   // -------------------""---------------------
+//	public LayerMask groundLayer; // The ground layer
 	
 	private Vector3 mousePos;
 	
@@ -34,11 +39,15 @@ public class Player_Script : MonoBehaviour {
 	
 	private Rigidbody2D playerRigidBody;
 
-	//BÆTT INN!!!!
+	//BÆTT INN FYRIR KNOCKBACK/WALLJUMP !!!!
 	public float knockBack;
 	public float knockBackLength;
 	public float knockBackCount;
-	public bool knockFromRight;
+
+	//BÆTT INN FYRIR WALLJUMP!!!
+	public Transform wallCheck;
+	public float wallCheckRadius;
+	public LayerMask WhatIsWall;
 
 	//private float move; // The horizontal movement input by the player's controls
 	
@@ -57,8 +66,12 @@ public class Player_Script : MonoBehaviour {
 		rope.material.color = Color.black;   // Rope is black
 		rope.enabled = false;                // Make rope not render by default
 	}
-	
-	
+
+
+	//BÆTT INN!!!!!
+	void FixedUpdate() {
+		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -81,11 +94,11 @@ public class Player_Script : MonoBehaviour {
 		//--This is the standard moveset--
 		else {
 			//--casts a ray to know if we are grounded--
-			RaycastHit2D hitInfo = Physics2D.Linecast(startPos.position, endPos.position);
-			if (hitInfo.collider != null) {
-				grounded = true;
-				wasGrappled = false;
-			}
+//			RaycastHit2D hitInfo = Physics2D.Linecast(startPos.position, endPos.position);
+//			if (hitInfo.collider != null) {
+//				grounded = true;
+//				wasGrappled = false;
+//			}
 			
 			float move = Input.GetAxisRaw ("Horizontal");
 			
@@ -189,14 +202,15 @@ public class Player_Script : MonoBehaviour {
 		//BÆTT INN!!!!!!
 		if (knockBackCount <= 0) {
 			playerRigidBody.velocity = new Vector2 (move * moveSpeed, playerRigidBody.velocity.y);
-		} 
+		}
+		//BÆTT INN!!!!
 		else {
-			if(knockFromRight){
-				playerRigidBody.velocity = new Vector2 (-knockBack, knockBack);
-			}
-			else{
-				playerRigidBody.velocity = new Vector2 (knockBack, knockBack);
-			}
+//			if(knockFromRight){
+////				playerRigidBody.AddForce(new Vector2 (-knockBack, knockBack), ForceMode2D.Impulse);
+//			}
+//			else{
+////				playerRigidBody.AddForce(new Vector2 (knockBack, knockBack), ForceMode2D.Impulse);
+//			}
 			knockBackCount -= Time.deltaTime;
 		}
 	}
@@ -215,9 +229,22 @@ public class Player_Script : MonoBehaviour {
 		grounded = false;
 	}
 
-	void OnCollisionEnter2D(Collision2D other){
-		if (other.gameObject.tag == "Wall" && !grounded) {
+
+	//BÆTT INN!!!
+	public void knockPlayer(bool left){
+		if (left) {
 			playerRigidBody.velocity = new Vector2 (knockBack, knockBack);
+		} 
+		else {
+			playerRigidBody.velocity = new Vector2 (-knockBack, knockBack);
+		}
+	}
+
+	//BÆTT INN!!!!
+	void OnCollisionStay2D(Collision2D other){
+		if (other.gameObject.tag == "Wall" && !grounded && Input.GetKeyDown (KeyCode.Space)) {
+			knockPlayer(Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, WhatIsWall));
+			knockBackCount = knockBackLength;
 		}
 	}
 }

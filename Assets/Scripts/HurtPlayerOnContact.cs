@@ -22,10 +22,10 @@ public class HurtPlayerOnContact : MonoBehaviour {
 			var player = other.GetComponent<Player_Script>();
 			player.knockBackCount = player.knockBackLength;
 			if(other.transform.position.x < transform.position.x){
-				player.knockFromRight = true;
+				player.knockPlayer(false);
 			}
 			else{
-				player.knockFromRight = false;
+				player.knockPlayer(true);
 			}
 		}
 	}
