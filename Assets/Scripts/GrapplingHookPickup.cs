@@ -8,7 +8,7 @@ public class GrapplingHookPickup : MonoBehaviour {
 
 	void Start(){
 		pickedUpBy = GameObject.FindGameObjectWithTag ("Player");
-//		levelManager = FindObjectOfType<LevelManager> ();
+		levelManager = FindObjectOfType<LevelManager> ();
 	}
 	
 

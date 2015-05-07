@@ -22,9 +22,7 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
 		player = FindObjectOfType<Player_Script> ();
 		camera = FindObjectOfType<Camera_Script> ();
-		//healthManager = FindObjectOfType<HealthManager> ();
 		healthBarSwapper = FindObjectOfType<HealthBarSwapper> ();
-		pickup = FindObjectOfType<AudioSource> ();
 	}
 	
 	// Update is called once per frame

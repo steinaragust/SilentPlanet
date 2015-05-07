@@ -22,7 +22,7 @@ public class EnergyManager : MonoBehaviour {
 			healthBarSwapper.IncreaseMaxHealth ();
 			energy = 0;
 		}
-		text.text = "" + energy;
+		text.text = "" + energy + "/5";
 	}
 
 	public static void AddEnergy (int energyToAdd){
