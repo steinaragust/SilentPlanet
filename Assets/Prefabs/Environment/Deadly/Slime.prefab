@@ -100,6 +100,7 @@ MonoBehaviour:
   speed: 4
   player: {fileID: 0}
   damageToGive: 1
+  healthBarSwapper: {fileID: 0}
 --- !u!114 &11467852
 MonoBehaviour:
   m_ObjectHideFlags: 1

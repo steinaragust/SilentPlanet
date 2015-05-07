@@ -9,9 +9,9 @@ public class EnemyPatrol : MonoBehaviour {
 	public Transform wallCheck;
 	public float wallCheckRadius;
 	public LayerMask WhatIsWall;
-	private bool hittingWall;
+	public bool hittingWall;
 
-	private bool notAtEdge;
+	public bool notAtEdge;
 	public Transform edgeCheck;
 
 	public bool stunned;
@@ -37,17 +37,22 @@ public class EnemyPatrol : MonoBehaviour {
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, WhatIsWall);
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallCheckRadius, WhatIsWall);
 
-		if (hittingWall || !notAtEdge) {
+		if (hittingWall || !notAtEdge || (!hittingWall && notAtEdge &&  GetComponent<Rigidbody2D>().velocity.x == 0)) {
 			moveRight = !moveRight;
 		}
+//		if (!hittingWall && notAtEdge &&  GetComponent<Rigidbody2D>().velocity.x == 0) {
+//			moveRight = !moveRight;
+//		}
 
 		if (moveRight) {
 			Debug.Log ("moving right");
+			Debug.Log ("speed of: " + gameObject.name + ": " + GetComponent<Rigidbody2D>().velocity.x);
 			transform.localScale = new Vector3(-1f, 1f, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		} 
 		else {
 			Debug.Log ("moving left");
+			Debug.Log ("speed of: " + gameObject.name + ": " + GetComponent<Rigidbody2D>().velocity.x);
 			transform.localScale = new Vector3(1f, 1f, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		}

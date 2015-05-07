@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9ac062a8904289d469d6567f8c210d1d
-timeCreated: 1430678500
+timeCreated: 1431018232
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,7 @@ TextureImporter:
     21300006: GrapplingShot
     21300008: Spike
     21300010: Ground
+    21300012: SmallEnemy
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -112,6 +113,16 @@ TextureImporter:
         y: 382
         width: 279
         height: 118
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: SmallEnemy
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 729
+        width: 118
+        height: 140
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

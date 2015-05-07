@@ -8,11 +8,13 @@ public class EnemyProjectileController : MonoBehaviour {
 //	public float rotationSpeed;
 	public int damageToGive;
 	private Rigidbody2D myRigidBody2D;
+	public HealthBarSwapper healthBarSwapper;
 
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<Player_Script> ();
 		myRigidBody2D = GetComponent<Rigidbody2D> ();
+		healthBarSwapper = FindObjectOfType<HealthBarSwapper> ();
 		if (player.transform.position.x < transform.position.x) {
 			speed = -speed;
 //			rotationSpeed = -rotationSpeed;
@@ -28,7 +30,8 @@ public class EnemyProjectileController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){	
 		if (other.name == "Player_Bird") {
-			HealthManager.HurtPlayer(damageToGive);
+//			HealthManager.HurtPlayer(damageToGive);
+			healthBarSwapper.HurtPlayer(damageToGive);
 		}
 //		Destroy (gameObject); //HMM ??
 	}
