@@ -16,12 +16,15 @@ public class LevelManager : MonoBehaviour {
 //	public HealthManager healthManager;
 	public HealthBarSwapper healthBarSwapper;
 
+	public AudioSource pickup;
+
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<Player_Script> ();
 		camera = FindObjectOfType<Camera_Script> ();
 		//healthManager = FindObjectOfType<HealthManager> ();
 		healthBarSwapper = FindObjectOfType<HealthBarSwapper> ();
+		pickup = FindObjectOfType<AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -39,7 +42,7 @@ public class LevelManager : MonoBehaviour {
 		player.enabled = false;
 		player.GetComponent<Renderer> ().enabled = false;
 		camera.GetComponent<Camera_Script>().isFollowing = false;
-		Debug.Log ("Player respawn here!");
+//		Debug.Log ("Player respawn here!");
 		yield return new WaitForSeconds (respawnDelay);
 		player.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0f, 0f);
 		player.transform.position = currentCheckpoint.transform.position;
@@ -51,5 +54,9 @@ public class LevelManager : MonoBehaviour {
 //		healthManager.isDead = false;
 		camera.isFollowing = true;
 		Instantiate (respawnParticle, currentCheckpoint.transform.position, currentCheckpoint.transform.rotation);
+	}
+
+	public void playPickupSound(){
+		pickup.Play ();
 	}
 }

@@ -4,9 +4,11 @@ using System.Collections;
 public class GrapplingHookPickup : MonoBehaviour { 
 
 	public GameObject pickedUpBy;
+	public LevelManager levelManager;
 
 	void Start(){
 		pickedUpBy = GameObject.FindGameObjectWithTag ("Player");
+//		levelManager = FindObjectOfType<LevelManager> ();
 	}
 	
 
@@ -14,6 +16,7 @@ public class GrapplingHookPickup : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if(other.gameObject.tag == pickedUpBy.tag){
 			pickedUpBy.GetComponent<Player_Script>().hasGrapplingHook = true;
+			levelManager.playPickupSound();
 			GameObject hookPickup = GameObject.FindGameObjectWithTag("GrapplingHookPickup");
 			Object.Destroy(hookPickup);
 		}

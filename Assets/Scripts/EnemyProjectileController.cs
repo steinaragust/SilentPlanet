@@ -24,7 +24,7 @@ public class EnemyProjectileController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		myRigidBody2D.velocity = new Vector2 (speed, myRigidBody2D.velocity.y);
-		Debug.Log ("speed: " + speed);
+//		Debug.Log ("speed: " + speed);
 //		myRigidBody2D.angularVelocity = rotationSpeed;
 	}
 
