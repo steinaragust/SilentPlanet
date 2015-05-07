@@ -10,17 +10,18 @@ public class LevelManager : MonoBehaviour {
 	public GameObject respawnParticle;
 
 	public float respawnDelay;
-	//private Camera_Script camera;
-	public GameObject camera;
+	private Camera_Script camera;
+//	public GameObject camera;
 
-	public HealthManager healthManager;
+//	public HealthManager healthManager;
+	public HealthBarSwapper healthBarSwapper;
 
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<Player_Script> ();
-		//camera = FindObjectOfType<Camera_Script> ();
-		camera = GameObject.FindGameObjectWithTag ("MainCamera");
-		healthManager = FindObjectOfType<HealthManager> ();
+		camera = FindObjectOfType<Camera_Script> ();
+		//healthManager = FindObjectOfType<HealthManager> ();
+		healthBarSwapper = FindObjectOfType<HealthBarSwapper> ();
 	}
 	
 	// Update is called once per frame
@@ -44,9 +45,11 @@ public class LevelManager : MonoBehaviour {
 		player.transform.position = currentCheckpoint.transform.position;
 		player.enabled = true;
 		player.GetComponent<Renderer> ().enabled = true;
-		healthManager.FullHealth ();
-		healthManager.isDead = false;
-		camera.GetComponent<Camera_Script> ().isFollowing = true;
+		healthBarSwapper.FullHealth ();
+		healthBarSwapper.isDead = false;
+//		healthManager.FullHealth ();
+//		healthManager.isDead = false;
+		camera.isFollowing = true;
 		Instantiate (respawnParticle, currentCheckpoint.transform.position, currentCheckpoint.transform.rotation);
 	}
 }
