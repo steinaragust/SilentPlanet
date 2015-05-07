@@ -17,7 +17,7 @@ public class EnemyPatrol : MonoBehaviour {
 	public bool stunned;
 
 	public float howLongStunned;
-	public float stunnedFor;
+	private float stunnedFor;
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +27,7 @@ public class EnemyPatrol : MonoBehaviour {
 
 	//
 	void Update () {
-		if (stunnedFor > 0 && stunned) {
+		if (stunnedFor > 0) {
 			stunnedFor -= Time.deltaTime;
 			return;
 		} 
@@ -42,17 +42,18 @@ public class EnemyPatrol : MonoBehaviour {
 		}
 
 		if (moveRight) {
+			Debug.Log ("moving right");
 			transform.localScale = new Vector3(-1f, 1f, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		} 
 		else {
+			Debug.Log ("moving left");
 			transform.localScale = new Vector3(1f, 1f, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		//knockBackCount -= Time.deltaTime;
 		if (other.tag == "TrapsForEnemys") {
 			stunned = true;
 			stunnedFor = howLongStunned;

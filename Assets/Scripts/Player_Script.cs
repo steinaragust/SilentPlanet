@@ -2,11 +2,19 @@ using UnityEngine;
 using System.Collections;
 
 public class Player_Script : MonoBehaviour {
-	
+
+
+	public bool grounded;
+	public bool falling;
+	public float velocityX;
+	public float velocityY;
+	public float move;
+
 	public Transform shooter; // Transform coordinates of the Player
 	public LayerMask layersDetectedByHook; // The Layer that you can grapple too
 	private bool isGrappled = false;
 	public Material mat; // Material of the grappling rope
+	public float grapplingRopeWidth;
 	
 	public float maxRopeLength = 5; // Maximum length of the rope
 	public float moveSpeed = 3; // the movespeed of the player
@@ -14,14 +22,13 @@ public class Player_Script : MonoBehaviour {
 	public float ropeReelSpeed = 0.05f; // the speed of which the rope reels in or slackens in length
 	public float jumpHeight = 6;
 	public float afterBeingGrappledAirMovement = 0.35f;
-	
 	public float maxMoveSpeed = 2;
 
 	//BÆTT INN, AÐFERÐ 2 FYRIR GROUNDCHECK
 	public Transform groundCheck;
 	public float groundCheckRadius;
 	public LayerMask whatIsGround;
-	private bool grounded;
+
 	
 	private bool wasGrappled = false;
 	
@@ -76,7 +83,7 @@ public class Player_Script : MonoBehaviour {
 		hitObject = GameObject.FindGameObjectWithTag("GrappleHit");  // Get the object that points to the grapple point
 		
 		// The code for the rendering of the line
-		rope.SetWidth(0.05f, 0.05f);         // Width of the rope
+		rope.SetWidth(grapplingRopeWidth, grapplingRopeWidth);         // Width of the rope
 		rope.SetVertexCount(2);              // Number of rope elements
 		rope.material.color = Color.black;   // Rope is black
 		rope.enabled = false;                // Make rope not render by default
@@ -96,14 +103,25 @@ public class Player_Script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		move = Input.GetAxisRaw ("Horizontal");
+
+		velocityX = playerRigidBody.velocity.x;
+		velocityY = playerRigidBody.velocity.y;
+
+		//checks if player is falling
+		if (playerRigidBody.velocity.y < 0 && !isGrappled) {falling = true;}
+		else{falling = false;}
+
+
 		// -----------------------------------------
 		// called if the left-mousebutton is pressed
-		if ((Input.GetMouseButtonDown (0) || Input.GetButtonDown("Fire2"))&& hasDistraction == false) {
+		if ((Input.GetMouseButtonDown (0) || Input.GetButtonDown("Fire2"))&& !hasDistraction) {
 			shootGrapplingHook();
 		}
 		
 		// If you are grappling a surface and you are holding down the left mouse button
-		else if(((Input.GetMouseButton(0) || Input.GetButtonDown ("Fire2")) && isGrappled) && hasDistraction == false) {
+		else if(((Input.GetMouseButton(0) || Input.GetButtonDown ("Fire2")) && isGrappled) && !hasDistraction) {
 			movementWhileGrappled();
 		}
 		
@@ -114,7 +132,7 @@ public class Player_Script : MonoBehaviour {
 		
 		//--This is the standard moveset--
 		else {
-			if(hasDistraction == true)
+			if(hasDistraction)
 			{
 				if(distractionDelay > 0 && distractionTransforms != null) {
 					distractionDelay -= Time.deltaTime;
@@ -129,23 +147,23 @@ public class Player_Script : MonoBehaviour {
 				}
 			}
 			
-			float move = Input.GetAxisRaw ("Horizontal");
+			//float move = Input.GetAxisRaw ("Horizontal");
 			
 			//--Main ground movement--
-			if (grounded == true) {
-				normalPlayerMovement(move);
+			if (grounded) {
+				normalPlayerMovement();
 			}
 			
 			//--movement after detaching the grapple hook--
-			if(wasGrappled == true) {
-				afterBeingGrappledMovement(move);
+			if(wasGrappled) {
+				afterBeingGrappledMovement();
 			}
 			
 			//--Main air movement--
-			else {
-				if ((Input.GetKey (KeyCode.D)) || (Input.GetKey (KeyCode.A))) {
-					normalPlayerMovement(move);
-				}
+			else if(((Input.GetKey (KeyCode.D)) || (Input.GetKey (KeyCode.A))) //if player pushes either directional buttons in air
+			        || (!(Input.GetKey (KeyCode.D)) && !(Input.GetKey (KeyCode.A)))){ //if player lets go of both directional buttons 
+					
+				normalPlayerMovement();
 			}
 			
 			//--Main jump code--
@@ -242,7 +260,7 @@ public class Player_Script : MonoBehaviour {
 		ropeCollPoes.Clear ();
 	}
 	
-	public void normalPlayerMovement(float move)
+	public void normalPlayerMovement()
 	{
 		//BÆTT INN!!!!!!
 		if (knockBackCount <= 0) {
@@ -260,7 +278,7 @@ public class Player_Script : MonoBehaviour {
 		}
 	}
 	
-	public void afterBeingGrappledMovement(float move)
+	public void afterBeingGrappledMovement()
 	{
 		if ((Input.GetKey (KeyCode.D) || (Input.GetKey (KeyCode.A))) && (playerRigidBody.velocity.magnitude <= maxMoveSpeed)) {
 			playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x + (move * afterBeingGrappledAirMovement), playerRigidBody.velocity.y);
@@ -271,7 +289,7 @@ public class Player_Script : MonoBehaviour {
 	public void mainJump()
 	{
 		playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpHeight);
-		grounded = false;
+		//grounded = false;
 	}
 
 
