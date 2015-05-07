@@ -225,6 +225,7 @@ public class Player_Script : MonoBehaviour {
 				grapple.distance = grapple.distance + ropeReelSpeed;
 			}
 		}
+		//Debug.Log(grapple.distance + oldRopeTotalLength);
 	}
 
 	
@@ -305,12 +306,14 @@ public class Player_Script : MonoBehaviour {
 
 	public void createNewRopeJoint(RaycastHit2D newRopeHit)
 	{
+		float oldTempDist = Vector3.Distance(hitPosition,transform.position);
+
 		// Length of the previus egment of the rope(the one before the current collision)
-		float oldRopeSegmentLength = Vector3.Distance(newRopeHit.collider.transform.position, hitPosition);
+		//float oldRopeSegmentLength = Vector3.Distance(newRopeHit.point, hitPosition);
 		
 		// Keeping tabs on the current length of the parts of the rope that are not active at this time
-		oldRopeTotalLength += oldRopeSegmentLength;
-		oldRopeSegmentLengths.Push(oldRopeSegmentLength);
+		//oldRopeTotalLength += oldRopeSegmentLength;
+		//oldRopeSegmentLengths.Push(oldRopeSegmentLength);
 		
 		// Adding the old collision point to the collection of rope collision points
 		ropeCollisionPoints.Push(hitObject.transform.position);
@@ -320,11 +323,20 @@ public class Player_Script : MonoBehaviour {
 		Vector3 normallinn = newRopeHit.normal;
 		
 		// The new collision point is always located a small distance from the normal of the collider surface
-		hitObject.transform.position = new Vector3(newRopeHit.point.x + (normallinn.x * 0.02f), newRopeHit.point.y + (normallinn.y * 0.02f), 0);
+		Vector3 newJointLocation = new Vector3(newRopeHit.point.x + (normallinn.x * 0.02f), newRopeHit.point.y + (normallinn.y * 0.02f), 0);
+
+		// Length of the previus egment of the rope(the one before the current collision)
+		float oldRopeSegmentLength = Vector3.Distance(newJointLocation, hitPosition);
+		// Keeping tabs on the current length of the parts of the rope that are not active at this time
+		oldRopeTotalLength += oldRopeSegmentLength;
+		oldRopeSegmentLengths.Push(oldRopeSegmentLength);
+
+		hitObject.transform.position = newJointLocation;
 		hitPosition = hitObject.transform.position;
 		
 		// The new distance of the current used rope is updated
-		grapple.distance = Vector2.Distance(hitPosition, transform.position);
+		//grapple.distance = Vector2.Distance(hitPosition, transform.position);
+		grapple.distance = oldTempDist - oldRopeSegmentLength - 0.2f;
 	}
 
 	public void removeRopeJoint()
@@ -334,6 +346,7 @@ public class Player_Script : MonoBehaviour {
 		{
 			hitObject.transform.position = (Vector3)ropeCollisionPoints.Pop (); // Move the rope swing joint position to the old position
 			hitPosition = hitObject.transform.position;
+			//grapple.distance = Vector2.Distance(hitPosition, transform.position);
 			grapple.distance = (grapple.distance + (float)oldRopeSegmentLengths.Peek()); // Making the active rope the correct length 
 			oldRopeTotalLength -= (float)oldRopeSegmentLengths.Pop(); // 
 			ropeCollPoes.RemoveAt(ropeCollPoes.Count-1);
