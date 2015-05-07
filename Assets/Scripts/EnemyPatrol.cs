@@ -17,7 +17,7 @@ public class EnemyPatrol : MonoBehaviour {
 	public bool stunned;
 
 	public float howLongStunned;
-	public float stunnedFor;
+	private float stunnedFor;
 
 	// Use this for initialization
 	void Start () {
@@ -31,9 +31,9 @@ public class EnemyPatrol : MonoBehaviour {
 			stunnedFor -= Time.deltaTime;
 			return;
 		} 
-//		else {
-//			stunned = false;
-//		}
+		else {
+			stunned = false;
+		}
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, WhatIsWall);
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallCheckRadius, WhatIsWall);
 
@@ -42,19 +42,20 @@ public class EnemyPatrol : MonoBehaviour {
 		}
 
 		if (moveRight) {
+			Debug.Log ("moving right");
 			transform.localScale = new Vector3(-1f, 1f, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		} 
 		else {
+			Debug.Log ("moving left");
 			transform.localScale = new Vector3(1f, 1f, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		//knockBackCount -= Time.deltaTime;
 		if (other.tag == "TrapsForEnemys") {
-//			stunned = true;
+			stunned = true;
 			stunnedFor = howLongStunned;
 		}
 	}

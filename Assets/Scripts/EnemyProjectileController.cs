@@ -32,4 +32,8 @@ public class EnemyProjectileController : MonoBehaviour {
 		}
 //		Destroy (gameObject); //HMM ??
 	}
+
+	void OnCollisionEnter2D(){
+		Destroy (gameObject);
+	}
 }

@@ -13,6 +13,7 @@ GameObject:
   - 50: {fileID: 5079700}
   - 114: {fileID: 11467852}
   - 114: {fileID: 11449574}
+  - 60: {fileID: 6018358}
   m_Layer: 17
   m_Name: Slime
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: -1.27999997, z: 0}
+  m_LocalPosition: {x: 47.2599983, y: 4.19000006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -66,6 +67,25 @@ PolygonCollider2D:
       - {x: .267971575, y: -.0635942817}
       - {x: .327281058, y: -.00343418121}
       - {x: .152003527, y: .020252645}
+--- !u!60 &6018358
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128338}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: -.0668860674, y: .0886868238}
+      - {x: -.304469764, y: .0358754396}
+      - {x: -.293064058, y: -.0749999881}
+      - {x: .267971575, y: -.0635942817}
+      - {x: .327281058, y: -.00343418121}
+      - {x: .152003527, y: .020252645}
 --- !u!114 &11449574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd47593dfa99424ebc18158ab683a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 4
   player: {fileID: 0}
   damageToGive: 1
 --- !u!114 &11467852
