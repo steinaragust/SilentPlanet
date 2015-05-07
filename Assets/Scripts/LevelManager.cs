@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour {
 
 	public float respawnDelay;
 	private Camera_Script camera;
+//	public GameObject camera;
 
 //	public HealthManager healthManager;
 	public HealthBarSwapper healthBarSwapper;
@@ -37,7 +38,7 @@ public class LevelManager : MonoBehaviour {
 		Instantiate (deathParticle, player.transform.position, player.transform.rotation);
 		player.enabled = false;
 		player.GetComponent<Renderer> ().enabled = false;
-		camera.isFollowing = false;
+		camera.GetComponent<Camera_Script>().isFollowing = false;
 		Debug.Log ("Player respawn here!");
 		yield return new WaitForSeconds (respawnDelay);
 		player.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0f, 0f);

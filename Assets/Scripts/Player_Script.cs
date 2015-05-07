@@ -9,6 +9,8 @@ public class Player_Script : MonoBehaviour {
 	public float velocityX;
 	public float velocityY;
 	public float move;
+	public bool hasGrapplingHook;
+	public GameObject grapplingHook;
 
 	public Transform shooter; // Transform coordinates of the Player
 	public LayerMask layersDetectedByHook; // The Layer that you can grapple too
@@ -58,6 +60,7 @@ public class Player_Script : MonoBehaviour {
 	private Transform distractionTransforms;
 	private bool hasDistraction = false;
 	private float distractionDelay;
+	
 	// ----------------------------------------------------------
 
 
@@ -113,22 +116,30 @@ public class Player_Script : MonoBehaviour {
 		if (playerRigidBody.velocity.y < 0 && !isGrappled) {falling = true;}
 		else{falling = false;}
 
+		if (!hasGrapplingHook) {
+			grapplingHook.SetActive(false);
+		} 
+		else {
+			grapplingHook.SetActive(true);
+		}
 
 		// -----------------------------------------
 		// called if the left-mousebutton is pressed
-		if ((Input.GetMouseButtonDown (0) || Input.GetButtonDown("Fire2"))&& !hasDistraction) {
-			shootGrapplingHook();
-		}
+		if ((Input.GetMouseButtonDown (0) || Input.GetButtonDown ("Fire2")) && !hasDistraction && hasGrapplingHook) {
+
+			shootGrapplingHook ();
 		
+		}
+	
 		// If you are grappling a surface and you are holding down the left mouse button
-		else if(((Input.GetMouseButton(0) || Input.GetButtonDown ("Fire2")) && isGrappled) && !hasDistraction) {
-			movementWhileGrappled();
-		}
-		
+		else if (((Input.GetMouseButton (0) || Input.GetButtonDown ("Fire2")) && isGrappled) && !hasDistraction && hasGrapplingHook) {
+				movementWhileGrappled ();
+			}
+	
 		// To let go of the grappling hook
-		else if (Input.GetMouseButtonUp (0) && hasDistraction == false) {
-			letGo();
-		}
+		else if (Input.GetMouseButtonUp (0) && !hasDistraction && hasGrapplingHook) {
+				letGo ();
+			}
 		
 		//--This is the standard moveset--
 		else {
