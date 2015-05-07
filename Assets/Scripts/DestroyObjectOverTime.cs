@@ -19,7 +19,9 @@ public class DestroyObjectOverTime : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter2D(){
-		Destroy (gameObject);
+	void OnCollisionEnter2D(Collision2D the_Collider){
+		if (the_Collider.gameObject.layer == LayerMask.NameToLayer ("Enemy")) {
+			Destroy (gameObject);
+		}
 	}
 }

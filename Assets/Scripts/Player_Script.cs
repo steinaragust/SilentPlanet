@@ -4,7 +4,7 @@ using System.Collections;
 public class Player_Script : MonoBehaviour {
 	
 	public Transform shooter; // Transform coordinates of the Player
-	public LayerMask grappleLayer; // The Layer that you can grapple too
+	public LayerMask layersDetectedByHook; // The Layer that you can grapple too
 	private bool isGrappled = false;
 	public Material mat; // Material of the grappling rope
 	
@@ -39,6 +39,21 @@ public class Player_Script : MonoBehaviour {
 	
 	private Rigidbody2D playerRigidBody;
 
+	// BÆTT AF ATLA
+	private Stack ropeCollisionPoints; // Stack for keeping the transform coordinates of the collision points
+	private ArrayList ropeCollPoes;
+	
+	private float oldRopeTotalLength;
+	private Stack oldRopeSegmentLengths;
+	
+	public LayerMask collidableLayersForRope; //nonCollidableForRope = collidableLayersForRope
+	
+	private Transform distractionTransforms;
+	private bool hasDistraction = false;
+	private float distractionDelay;
+	// ----------------------------------------------------------
+
+
 	//BÆTT INN FYRIR KNOCKBACK/WALLJUMP !!!!
 	public float knockBack;
 	public float knockBackLength;
@@ -65,6 +80,12 @@ public class Player_Script : MonoBehaviour {
 		rope.SetVertexCount(2);              // Number of rope elements
 		rope.material.color = Color.black;   // Rope is black
 		rope.enabled = false;                // Make rope not render by default
+
+		ropeCollisionPoints = new Stack();
+		ropeCollPoes = new ArrayList();
+		
+		oldRopeTotalLength = 0;
+		oldRopeSegmentLengths = new Stack();
 	}
 
 
@@ -77,28 +98,36 @@ public class Player_Script : MonoBehaviour {
 	void Update () {
 		// -----------------------------------------
 		// called if the left-mousebutton is pressed
-		if (Input.GetMouseButtonDown (0) || Input.GetButtonDown("Fire2")) {
+		if ((Input.GetMouseButtonDown (0) || Input.GetButtonDown("Fire2"))&& hasDistraction == false) {
 			shootGrapplingHook();
 		}
 		
 		// If you are grappling a surface and you are holding down the left mouse button
-		else if((Input.GetMouseButton(0) || Input.GetButtonDown ("Fire2")) && isGrappled) {
+		else if(((Input.GetMouseButton(0) || Input.GetButtonDown ("Fire2")) && isGrappled) && hasDistraction == false) {
 			movementWhileGrappled();
 		}
 		
 		// To let go of the grappling hook
-		else if (Input.GetMouseButtonUp (0)) {
+		else if (Input.GetMouseButtonUp (0) && hasDistraction == false) {
 			letGo();
 		}
 		
 		//--This is the standard moveset--
 		else {
-			//--casts a ray to know if we are grounded--
-//			RaycastHit2D hitInfo = Physics2D.Linecast(startPos.position, endPos.position);
-//			if (hitInfo.collider != null) {
-//				grounded = true;
-//				wasGrappled = false;
-//			}
+			if(hasDistraction == true)
+			{
+				if(distractionDelay > 0 && distractionTransforms != null) {
+					distractionDelay -= Time.deltaTime;
+					hitObject.transform.position = distractionTransforms.position;
+					hitPosition = hitObject.transform.position;
+					rope.enabled = true;
+					redrawRope();
+				}
+				else{
+					hasDistraction = false;
+					rope.enabled = false;
+				}
+			}
 			
 			float move = Input.GetAxisRaw ("Horizontal");
 			
@@ -134,33 +163,46 @@ public class Player_Script : MonoBehaviour {
 		mouseDirection.Normalize(); // A little Linear Algebra to get the direction vector
 		
 		// Casts a ray to see if the player shot at a grapplable surface
-		RaycastHit2D hit = Physics2D.Raycast(shooter.position, mouseDirection, maxRopeLength, grappleLayer.value);
+		RaycastHit2D hit = Physics2D.Raycast(shooter.position, mouseDirection, maxRopeLength, layersDetectedByHook);
 		
-		if(hit.collider != null) // true when we hit a grapplable surface
-		{
-			Debug.Log("IT HIT!!!");
-			hitPosition = hit.point; // Saves the hit position
-			
-			// Moves the grapplable object to the hit position
-			hitObject.transform.position = new Vector3(hit.point.x, hit.point.y, 0);
-			
-			// Calculates the length of the rope
-			grapple.distance = Vector2.Distance(hitPosition, transform.position);
-			grapple.distance = grapple.distance - (grapple.distance / 10); // Shortens the rope a little so its pulls you just slightly
-			
-			grapple.enabled = true; // activate the spring joint for grappling hanging
-			isGrappled = true;
-			
-			// for drawing the rope
-			rope.enabled = true; // lets the rendered rope be visible
-			rope.SetPosition(0, shooter.position); // sets the starting point of the rendered line 
-			rope.SetPosition(1, hitPosition); // sets the end point of the rendered line
+		if (hit.collider != null) {
+			if (hit.collider.gameObject.layer == LayerMask.NameToLayer ("Grapplabe")) { // true when we hit a grapplable surface
+				createOriginalRope (hit);
+				
+				rope.enabled = true; // lets the rendered rope be visible
+				redrawRope (); // Actually the first drawing :/
+			}
+			if (hit.collider.gameObject.layer == LayerMask.NameToLayer ("TrapsForEnemys")) {
+				Rigidbody2D distractionObject = hit.collider.GetComponent<Rigidbody2D>();
+				distractionObject.isKinematic = false;
+				distractionTransforms = hit.collider.GetComponent<Transform>();
+				hasDistraction = true;
+				distractionDelay = 0.5f;
+			}
 		}
 	}
 	
-	
 	public void movementWhileGrappled()
 	{
+		redrawRope ();
+		
+		Vector3 oldRopeAngle = hitPosition - transform.position;
+		oldRopeAngle.Normalize ();
+		Vector3 rayFromRope = new Vector3 (hitPosition.x - (oldRopeAngle.x * 0.05f), hitPosition.y - (oldRopeAngle.y * 0.05f), 0);
+		
+		// Casts a ray to see if the player shot at a grapplable surface
+		RaycastHit2D newRopeHit = Physics2D.Linecast(transform.position, rayFromRope, collidableLayersForRope);
+		
+		// Checks if the rope collided with something
+		if (newRopeHit.collider!= null) { // true when the rope hits a surface
+			createNewRopeJoint(newRopeHit); // Creates a new rope joint at the collided surface
+		}
+		
+		//--remove a rope joint if it is no longer needed--
+		if (ropeCollisionPoints.Count > 0) {
+			removeRopeJoint();
+		}
+		
 		//--Swing right on rope (When D key is pressed)--
 		if (Input.GetKey (KeyCode.D)) {
 			playerRigidBody.AddForce(new Vector2(ropeSwingSpeed, 0));
@@ -179,14 +221,12 @@ public class Player_Script : MonoBehaviour {
 		//--Loosen the rope--
 		if(Input.GetKey(KeyCode.S)) {
 			// Make shure we don't extend the rope beyond the maximum length of the rope
-			if(grapple.distance <= maxRopeLength){
+			if((grapple.distance + oldRopeTotalLength) <= maxRopeLength){
 				grapple.distance = grapple.distance + ropeReelSpeed;
 			}
 		}
-		//--redraw the rope--
-		rope.SetPosition(0, shooter.position);
-		rope.SetPosition(1, hitPosition);
 	}
+
 	
 	// When you let go of the left mouse button on letgo of the grappling hook
 	public void letGo()
@@ -195,6 +235,10 @@ public class Player_Script : MonoBehaviour {
 		rope.enabled = false; // hide the rendered rope
 		grapple.enabled = false; // deactivate the spring joint
 		wasGrappled = true; // bool for the movement right after you detach the grappling hook
+		oldRopeTotalLength = 0;
+		oldRopeSegmentLengths.Clear ();
+		ropeCollisionPoints.Clear();
+		ropeCollPoes.Clear ();
 	}
 	
 	public void normalPlayerMovement(float move)
@@ -229,6 +273,72 @@ public class Player_Script : MonoBehaviour {
 		grounded = false;
 	}
 
+
+	public void createOriginalRope(RaycastHit2D hit)
+	{
+		ropeCollisionPoints = new Stack();
+		ropeCollPoes = new ArrayList();
+		Vector3 normallinn = hit.normal;
+		
+		hitObject.transform.position = new Vector3(hit.point.x + (normallinn.x * 0.01f), hit.point.y + (normallinn.y * 0.01f), 0);
+		hitPosition = hitObject.transform.position;
+		
+		// Calculates the length of the rope
+		grapple.distance = Vector2.Distance(hitPosition, transform.position);
+		grapple.distance = grapple.distance - (grapple.distance / 10); // Shortens the rope a little so its pulls you just slightly
+		
+		grapple.enabled = true; // activate the spring joint for grappling hanging
+		isGrappled = true;
+	}
+
+	public void redrawRope()
+	{
+		int counter = ropeCollPoes.Count;
+		rope.SetVertexCount (counter + 2);
+		for(int i = 0; i < counter; i++) 
+		{
+			rope.SetPosition(i, (Vector3)ropeCollPoes[i]);
+		}
+		rope.SetPosition (counter, hitObject.transform.position);
+		rope.SetPosition (counter+1, transform.position);
+	}
+
+	public void createNewRopeJoint(RaycastHit2D newRopeHit)
+	{
+		// Length of the previus egment of the rope(the one before the current collision)
+		float oldRopeSegmentLength = Vector3.Distance(newRopeHit.collider.transform.position, hitPosition);
+		
+		// Keeping tabs on the current length of the parts of the rope that are not active at this time
+		oldRopeTotalLength += oldRopeSegmentLength;
+		oldRopeSegmentLengths.Push(oldRopeSegmentLength);
+		
+		// Adding the old collision point to the collection of rope collision points
+		ropeCollisionPoints.Push(hitObject.transform.position);
+		ropeCollPoes.Add(hitObject.transform.position);
+		
+		// Calculactes the normal of the surface the rope collided with
+		Vector3 normallinn = newRopeHit.normal;
+		
+		// The new collision point is always located a small distance from the normal of the collider surface
+		hitObject.transform.position = new Vector3(newRopeHit.point.x + (normallinn.x * 0.02f), newRopeHit.point.y + (normallinn.y * 0.02f), 0);
+		hitPosition = hitObject.transform.position;
+		
+		// The new distance of the current used rope is updated
+		grapple.distance = Vector2.Distance(hitPosition, transform.position);
+	}
+
+	public void removeRopeJoint()
+	{
+		RaycastHit2D isOldHit = Physics2D.Linecast((Vector3)ropeCollisionPoints.Peek(), transform.position, collidableLayersForRope);
+		if(isOldHit.collider == null)
+		{
+			hitObject.transform.position = (Vector3)ropeCollisionPoints.Pop (); // Move the rope swing joint position to the old position
+			hitPosition = hitObject.transform.position;
+			grapple.distance = (grapple.distance + (float)oldRopeSegmentLengths.Peek()); // Making the active rope the correct length 
+			oldRopeTotalLength -= (float)oldRopeSegmentLengths.Pop(); // 
+			ropeCollPoes.RemoveAt(ropeCollPoes.Count-1);
+		}
+	}
 
 	//BÆTT INN!!!
 	public void knockPlayer(bool left){

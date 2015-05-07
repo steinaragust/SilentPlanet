@@ -186,7 +186,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.1199989, y: -1.25999999, z: 0}
+  m_LocalPosition: {x: 8.10999966, y: -.170000002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 452892}
@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toRotate: {fileID: 116496}
   cameraDistance: 5
+  useController: 0
 --- !u!114 &11490908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -342,11 +343,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooter: {fileID: 452892}
-  grappleLayer:
+  layersDetectedByHook:
     serializedVersion: 2
-    m_Bits: 32768
+    m_Bits: 3244032
   mat: {fileID: 2100000, guid: 13e115ec5455ab147a585370accbf4df, type: 2}
-  maxRopeLength: 50
+  maxRopeLength: 9
   moveSpeed: 3
   ropeSwingSpeed: 2.3499999
   ropeReelSpeed: .0500000007
@@ -356,6 +357,9 @@ MonoBehaviour:
   groundCheck: {fileID: 407344}
   groundCheckRadius: .100000001
   whatIsGround:
+    serializedVersion: 2
+    m_Bits: 2195456
+  collidableLayersForRope:
     serializedVersion: 2
     m_Bits: 2195456
   knockBack: 5
