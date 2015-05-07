@@ -277,22 +277,15 @@ MonoBehaviour:
   velocityX: 0
   velocityY: 0
   move: 0
-<<<<<<< HEAD
-=======
   hasGrapplingHook: 0
   grapplingHook: {fileID: 116496}
->>>>>>> e828aa0e564b193211d2faa0d0bafdb8059826df
   shooter: {fileID: 452892}
   layersDetectedByHook:
     serializedVersion: 2
     m_Bits: 3244032
   mat: {fileID: 2100000, guid: 13e115ec5455ab147a585370accbf4df, type: 2}
   grapplingRopeWidth: .0700000003
-<<<<<<< HEAD
-  maxRopeLength: 9
-=======
-  maxRopeLength: 6
->>>>>>> e828aa0e564b193211d2faa0d0bafdb8059826df
+  maxRopeLength: 7
   moveSpeed: 3
   ropeSwingSpeed: 2.3499999
   ropeReelSpeed: .0500000007

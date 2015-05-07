@@ -78,6 +78,8 @@ public class Player_Script : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		//Cursor.visible = false;
+
 		playerRigidBody = this.GetComponent<Rigidbody2D>(); // Get RigidBody component of the player
 		
 		grapple = GetComponent<SpringJoint2D> (); // Get component of SpringJoint2D 
