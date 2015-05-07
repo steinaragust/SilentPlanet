@@ -26,7 +26,7 @@ GameObject:
   - 114: {fileID: 11465832}
   m_Layer: 8
   m_Name: GrapplingPivot
-  m_TagString: Untagged
+  m_TagString: GrapplingHook
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ GameObject:
   - 82: {fileID: 8248014}
   m_Layer: 8
   m_Name: Player_Bird
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,7 +186,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.48999977, y: -.709999979, z: 0}
+  m_LocalPosition: {x: 6.86999989, y: -.469999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 452892}
@@ -342,16 +342,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71b51a7c1a427c4998d5d67a422f765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grounded: 0
+  falling: 0
+  velocityX: 0
+  velocityY: 0
+  move: 0
+  hasGrapplingHook: 0
+  grapplingHook: {fileID: 116496}
   shooter: {fileID: 452892}
   layersDetectedByHook:
     serializedVersion: 2
     m_Bits: 3244032
   mat: {fileID: 2100000, guid: 13e115ec5455ab147a585370accbf4df, type: 2}
-  maxRopeLength: 9
+  grapplingRopeWidth: .0700000003
+  maxRopeLength: 6
   moveSpeed: 3
   ropeSwingSpeed: 2.3499999
   ropeReelSpeed: .0500000007
-  jumpHeight: 6
+  jumpHeight: 4
   afterBeingGrappledAirMovement: .349999994
   maxMoveSpeed: 2
   groundCheck: {fileID: 407344}
