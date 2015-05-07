@@ -12,7 +12,7 @@ GameObject:
   - 50: {fileID: 5082952}
   - 60: {fileID: 6059752}
   - 60: {fileID: 6031428}
-  - 114: {fileID: 11410980}
+  - 114: {fileID: 11494444}
   m_Layer: 20
   m_Name: Trap
   m_TagString: TrapsForEnemys
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150106}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.26999998, y: -.230000004, z: 0}
+  m_LocalPosition: {x: 1.50328827, y: -.0553642511, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,7 +109,7 @@ PolygonCollider2D:
       - {x: .280000001, y: -.284999996}
       - {x: .280000001, y: .144999996}
       - {x: .0399999991, y: .324999988}
---- !u!114 &11410980
+--- !u!114 &11494444
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 150106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260eefa3adca9014a80ee6300f227b76, type: 3}
+  m_Script: {fileID: 11500000, guid: af57a2961c65a0e4c8b629b52fd43b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &21234458
