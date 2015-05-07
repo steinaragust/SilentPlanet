@@ -13,6 +13,8 @@ TagManager:
   - GrappleHit
   - Wall
   - TrapsForEnemys
+  - GrapplingHook
+  - GrapplingHookPickup
   layers:
   - Default
   - TransparentFX

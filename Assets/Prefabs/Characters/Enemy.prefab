@@ -59,7 +59,6 @@ GameObject:
   - 114: {fileID: 11481516}
   - 61: {fileID: 6118702}
   - 114: {fileID: 11475908}
-  - 114: {fileID: 11497614}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -74,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186924}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.80999994, y: .449999988, z: 0}
+  m_LocalPosition: {x: 14.1000004, y: 16.1700001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 427618}
@@ -89,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 107934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.425000012, y: -1.07799995, z: 0}
+  m_LocalPosition: {x: -.49000001, y: -1.16400003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 403728}
@@ -177,6 +176,8 @@ MonoBehaviour:
   WhatIsWall:
     serializedVersion: 2
     m_Bits: 2162688
+  hittingWall: 0
+  notAtEdge: 0
   edgeCheck: {fileID: 423160}
   stunned: 0
   howLongStunned: 3
@@ -192,23 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageToGive: 2
---- !u!114 &11497614
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3b5911fe7673bf4aa023fd6a73d8aac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerRange: 5
-  enemyProjectile: {fileID: 128338, guid: 7a3527ed5b539a6498fc1454d8d5ab88, type: 2}
-  player: {fileID: 0}
-  launchPoint: {fileID: 439154}
-  checkEnemy: {fileID: 11475908}
-  waitBetweenShots: 1
+  healthBarSwapper: {fileID: 0}
 --- !u!212 &21217204
 SpriteRenderer:
   m_ObjectHideFlags: 1

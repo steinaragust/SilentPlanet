@@ -4,10 +4,11 @@ using System.Collections;
 public class HurtPlayerOnContact : MonoBehaviour {
 
 	public int damageToGive;
+	public HealthBarSwapper healthBarSwapper;
 
 	// Use this for initialization
 	void Start () {
-	
+		healthBarSwapper = FindObjectOfType<HealthBarSwapper> ();
 	}
 	
 	// Update is called once per frame
@@ -17,9 +18,10 @@ public class HurtPlayerOnContact : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		//Debug.Log ("trigger enter");
-		if (other.name == "Player_Bird" && HealthManager.playerHealth > 0) {
-			HealthManager.HurtPlayer(damageToGive);
-			other.GetComponent<AudioSource>().Play();
+		if (other.name == "Player_Bird" && healthBarSwapper.playerHealth > 0) {
+//			HealthManager.HurtPlayer(damageToGive);
+			healthBarSwapper.HurtPlayer(damageToGive);
+//			other.GetComponent<AudioSource>().Play();
 			var player = other.GetComponent<Player_Script>();
 			player.knockBackCount = player.knockBackLength;
 			if(other.transform.position.x < transform.position.x){
