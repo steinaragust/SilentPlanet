@@ -86,7 +86,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.1700001, y: -.479999989, z: 0}
+  m_LocalPosition: {x: .730000019, y: 8.94999981, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 403780}
@@ -198,7 +198,7 @@ MonoBehaviour:
   player: {fileID: 0}
   launchPoint: {fileID: 457916}
   checkEnemy: {fileID: 11408776}
-  waitBetweenShots: 1
+  waitBetweenShots: 2
 --- !u!114 &11429002
 MonoBehaviour:
   m_ObjectHideFlags: 1
