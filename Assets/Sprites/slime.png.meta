@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: 93b119179b8bda245a0752f40994f823
-timeCreated: 1430769990
+timeCreated: 1431193834
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: slime_0
+    21300002: slime_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,6 +58,16 @@ TextureImporter:
         y: 178
         width: 65
         height: 15
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: slime_1
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 35
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
