@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 458082}
   m_Layer: 8
-  m_Name: Player
+  m_Name: OldPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,7 +260,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toRotate: {fileID: 116496}
   cameraDistance: 5
-  useController: 0
+  useGamepad: 0
+  pScript: {fileID: 0}
+  swingingTiltSmooth: 2
+  tiltAngle: 30
+  afterGrappleSmooth: 9
+  grapplingTiltSmooth: 4
 --- !u!114 &11490908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,6 +279,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grounded: 0
   falling: 0
+  isGrappled: 0
+  wasGrappled: 0
   velocityX: 0
   velocityY: 0
   move: 0
@@ -297,6 +304,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2195456
+  playerRigidBody: {fileID: 0}
   collidableLayersForRope:
     serializedVersion: 2
     m_Bits: 2195456
@@ -308,6 +316,14 @@ MonoBehaviour:
   WhatIsWall:
     serializedVersion: 2
     m_Bits: 2097152
+  groundCheckPoint1: {fileID: 0}
+  groundCheckPoint2: {fileID: 0}
+  leftWallCheckPoint1: {fileID: 0}
+  leftWallCheckPoint2: {fileID: 0}
+  rightWallCheckPoint1: {fileID: 0}
+  rightWallCheckPoint2: {fileID: 0}
+  huggingLeftWall: 0
+  huggingRightWall: 0
 --- !u!120 &12054356
 LineRenderer:
   m_ObjectHideFlags: 1

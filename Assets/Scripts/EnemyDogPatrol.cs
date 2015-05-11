@@ -23,9 +23,11 @@ public class EnemyDogPatrol : MonoBehaviour {
 	public float playerRange;
 	public float moveSpeedIncrease;
 	public float normalMoveSpeed;
+	public Rigidbody2D enemyRigidbody;
 	
 	// Use this for initialization
 	void Start () {
+		enemyRigidbody = this.GetComponent<Rigidbody2D> ();
 		stunned = false;
 		player = FindObjectOfType<Player_Script> ();
 	}
@@ -63,8 +65,12 @@ public class EnemyDogPatrol : MonoBehaviour {
 			transform.localScale = new Vector3(1f, 1f, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		}
+//		Debug.Log ("bounds size: " + player.transform.GetComponent<Renderer> ().bounds.size.y);
+		if ((transform.position.y + (transform.GetComponent<Renderer> ().bounds.size.y * 2)) < (player.transform.position.y - (player.transform.GetComponent<Renderer> ().bounds.size.y / 2)) && (player.transform.position.x + player.transform.GetComponent<Renderer>().bounds.size.x) > (transform.position.x - transform.GetComponent<Renderer>().bounds.size.x) && (player.transform.position.x - player.transform.GetComponent<Renderer>().bounds.size.x) < (transform.position.x + transform.GetComponent<Renderer>().bounds.size.x)) {
+			Debug.Log ("yoloswag");
+			enemyRigidbody.AddForce(new Vector2(0, 2.1f),ForceMode2D.Impulse);
+		}
 	}
-	
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "TrapsForEnemys") {
 			stunned = true;

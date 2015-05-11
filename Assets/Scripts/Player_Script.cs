@@ -216,9 +216,9 @@ public class Player_Script : MonoBehaviour {
 			}
 			
 			//--movement after detaching the grapple hook--
-			else if(wasGrappled) {
-				afterBeingGrappledMovement();
-			}
+			//else if(wasGrappled) {
+				//afterBeingGrappledMovement();
+			//}
 			
 			//--Main air movement--
 			else{// if((Input.GetKey (KeyCode.D)) || (Input.GetKey (KeyCode.A))){ //if player pushes either directional buttons in air
