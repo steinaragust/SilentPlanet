@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21297736}
   - 58: {fileID: 5811596}
   - 114: {fileID: 11497066}
+  - 95: {fileID: 9509106}
   m_Layer: 19
   m_Name: Energy
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 126.160004, y: 39.2200012, z: 0}
+  m_LocalPosition: {x: 216.009995, y: -1.57000005, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
@@ -42,7 +43,24 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .25999999
+  m_Radius: .160316467
+--- !u!95 &9509106
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159646}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c23f02a316ed7a742af5b1627c6922c7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11497066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,7 +98,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 404910065
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300006, guid: 9ac062a8904289d469d6567f8c210d1d, type: 3}
+  m_Sprite: {fileID: 21300070, guid: fcbace2e324b87e448cb21b1b87e9b29, type: 3}
   m_Color: {r: 0, g: .664097786, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

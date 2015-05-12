@@ -170,6 +170,7 @@ MonoBehaviour:
   playerRange: 5
   moveSpeedIncrease: 5
   normalMoveSpeed: 2
+  enemyRigidbody: {fileID: 0}
 --- !u!212 &21278746
 SpriteRenderer:
   m_ObjectHideFlags: 1

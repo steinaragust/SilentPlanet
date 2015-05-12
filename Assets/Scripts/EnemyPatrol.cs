@@ -62,6 +62,7 @@ public class EnemyPatrol : MonoBehaviour {
 		if (other.tag == "TrapsForEnemys") {
 			stunned = true;
 			stunnedFor = howLongStunned;
+			Destroy(other.gameObject);
 		}
 	}
 }
