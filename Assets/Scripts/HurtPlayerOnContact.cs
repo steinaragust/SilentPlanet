@@ -19,7 +19,6 @@ public class HurtPlayerOnContact : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		//Debug.Log ("trigger enter");
 		if (other.name == "Player_Bird" && healthBarSwapper.playerHealth > 0) {
-//			HealthManager.HurtPlayer(damageToGive);
 			healthBarSwapper.HurtPlayer(damageToGive);
 //			other.GetComponent<AudioSource>().Play();
 			var player = other.GetComponent<Player_Script>();
