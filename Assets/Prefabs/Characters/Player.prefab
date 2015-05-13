@@ -159,6 +159,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &165378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 422284}
+  m_Layer: 0
+  m_Name: HitPositionTemp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &166992
 GameObject:
   m_ObjectHideFlags: 1
@@ -220,6 +235,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &197834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 492342}
+  - 212: {fileID: 21223404}
+  m_Layer: 0
+  m_Name: GrapplingShot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &407344
 Transform:
   m_ObjectHideFlags: 1
@@ -243,6 +274,18 @@ Transform:
   m_LocalScale: {x: 1.31578946, y: 1.5625, z: 1}
   m_Children: []
   m_Father: {fileID: 452892}
+  m_RootOrder: 3
+--- !u!4 &422284
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.581085205, y: -45.0764999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 458082}
   m_RootOrder: 3
 --- !u!4 &423496
 Transform:
@@ -325,7 +368,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .170000002, y: -.560000002, z: 0}
+  m_LocalPosition: {x: -1.38999999, y: -45.2400017, z: 0}
   m_LocalScale: {x: .75999999, y: .639999986, z: 1}
   m_Children:
   - {fileID: 427340}
@@ -346,11 +389,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 209.91243, y: -8.3022871, z: 0}
+  m_LocalPosition: {x: 237.886581, y: 80.2461014, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 452892}
   - {fileID: 423496}
+  - {fileID: 492342}
+  - {fileID: 422284}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &482196
@@ -377,6 +422,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 452892}
   m_RootOrder: 8
+--- !u!4 &492342
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .363418579, y: -45.1380997, z: 0}
+  m_LocalScale: {x: .800000012, y: .800000012, z: 1}
+  m_Children: []
+  m_Father: {fileID: 458082}
+  m_RootOrder: 2
 --- !u!4 &494792
 Transform:
   m_ObjectHideFlags: 1
@@ -476,8 +533,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grounded: 0
   falling: 0
-  isGrappled: 0
-  wasGrappled: 0
   velocityX: 0
   velocityY: 0
   move: 0
@@ -487,29 +542,24 @@ MonoBehaviour:
   layersDetectedByHook:
     serializedVersion: 2
     m_Bits: 3244032
+  isGrappled: 0
   mat: {fileID: 2100000, guid: 13e115ec5455ab147a585370accbf4df, type: 2}
   grapplingRopeWidth: .0700000003
-  maxRopeLength: 8
-  moveSpeed: 3
+  grapplingHookShotTime: 39
+  maxRopeLength: 8.5
   ropeSwingSpeed: 3.25
   ropeReelSpeed: .100000001
-  jumpHeight: 5.5
-  afterBeingGrappledAirMovement: .349999994
-  maxMoveSpeed: 2
   groundCheck: {fileID: 407344}
   groundCheckRadius: .100000001
   whatIsGround:
     serializedVersion: 2
     m_Bits: 2195456
-  playerRigidBody: {fileID: 0}
   collidableLayersForRope:
     serializedVersion: 2
     m_Bits: 2195456
   knockBack: 5
   knockBackLength: 1
   knockBackCount: 0
-  wallCheck: {fileID: 429156}
-  wallCheckRadius: .100000001
   WhatIsWall:
     serializedVersion: 2
     m_Bits: 2097152
@@ -521,6 +571,8 @@ MonoBehaviour:
   rightWallCheckPoint2: {fileID: 488114}
   huggingLeftWall: 0
   huggingRightWall: 0
+  theActualHook: {fileID: 197834}
+  hitPositionTempObj: {fileID: 422284}
 --- !u!120 &12054356
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -558,6 +610,32 @@ LineRenderer:
       serializedVersion: 2
       rgba: 4294967295
   m_UseWorldSpace: 1
+--- !u!212 &21223404
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197834}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300006, guid: 9ac062a8904289d469d6567f8c210d1d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21223508
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -581,7 +659,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1557751853
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9ac062a8904289d469d6567f8c210d1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21239404

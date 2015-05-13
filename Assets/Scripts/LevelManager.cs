@@ -48,8 +48,6 @@ public class LevelManager : MonoBehaviour {
 		player.GetComponent<Renderer> ().enabled = true;
 		healthBarSwapper.FullHealth ();
 		healthBarSwapper.isDead = false;
-//		healthManager.FullHealth ();
-//		healthManager.isDead = false;
 		camera.isFollowing = true;
 		Instantiate (respawnParticle, currentCheckpoint.transform.position, currentCheckpoint.transform.rotation);
 	}
