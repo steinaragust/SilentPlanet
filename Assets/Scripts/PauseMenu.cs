@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour {
 
 	public void Resume(){
 		isPaused = false;
+		Debug.Log ("should resume!");
 	}
 
 	public void Quit(){
