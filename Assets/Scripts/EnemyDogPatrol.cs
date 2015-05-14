@@ -24,7 +24,13 @@ public class EnemyDogPatrol : MonoBehaviour {
 	public float moveSpeedIncrease;
 	public float normalMoveSpeed;
 	public Rigidbody2D enemyRigidbody;
-	
+
+	//Ground check
+	public Transform groundCheck;
+	public float groundCheckRadius;
+	public LayerMask whatIsGround;
+	private bool grounded;
+
 	// Use this for initialization
 	void Start () {
 		enemyRigidbody = this.GetComponent<Rigidbody2D> ();
@@ -33,6 +39,7 @@ public class EnemyDogPatrol : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
 		if (stunnedFor > 0) {
 			stunnedFor -= Time.deltaTime;
 			return;
@@ -43,8 +50,12 @@ public class EnemyDogPatrol : MonoBehaviour {
 		hittingWall = Physics2D.OverlapCircle (wallCheck.position, wallCheckRadius, WhatIsWall);
 		notAtEdge = Physics2D.OverlapCircle (edgeCheck.position, wallCheckRadius, WhatIsWall);
 		Debug.DrawLine (new Vector3 (transform.position.x - playerRange, transform.position.y, transform.position.z), new Vector3 (transform.position.x + playerRange, transform.position.y, transform.position.z));
-		
-		if (hittingWall || !notAtEdge || (!hittingWall && notAtEdge &&  GetComponent<Rigidbody2D>().velocity.x == 0) || transform.localScale.x > 0 && player.transform.position.x > transform.position.x && player.transform.position.x < transform.position.x + playerRange || transform.localScale.x < 0 && player.transform.position.x < transform.position.x && player.transform.position.x > transform.position.x - playerRange) {
+		if (hittingWall && grounded ||
+		    !notAtEdge && grounded ||
+		    (!hittingWall && notAtEdge &&  GetComponent<Rigidbody2D>().velocity.x == 0 && grounded) ||
+		    transform.localScale.x > 0 && player.transform.position.x > transform.position.x && player.transform.position.x < transform.position.x + playerRange && grounded ||
+		    transform.localScale.x < 0 && player.transform.position.x < transform.position.x && player.transform.position.x > transform.position.x - playerRange && grounded) {
+			Debug.Log("Swapping");
 			moveRight = !moveRight;
 		}
 		if (player.transform.position.x < transform.position.x + playerRange && player.transform.position.x > transform.position.x - playerRange) {
@@ -66,9 +77,13 @@ public class EnemyDogPatrol : MonoBehaviour {
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		}
 //		Debug.Log ("bounds size: " + player.transform.GetComponent<Renderer> ().bounds.size.y);
-		if ((transform.position.y + (transform.GetComponent<Renderer> ().bounds.size.y * 2)) < (player.transform.position.y - (player.transform.GetComponent<Renderer> ().bounds.size.y / 2)) && (player.transform.position.x + player.transform.GetComponent<Renderer>().bounds.size.x) > (transform.position.x - transform.GetComponent<Renderer>().bounds.size.x) && (player.transform.position.x - player.transform.GetComponent<Renderer>().bounds.size.x) < (transform.position.x + transform.GetComponent<Renderer>().bounds.size.x)) {
+		if ((transform.position.y + (transform.GetComponent<Renderer> ().bounds.size.y * 2)) < (player.transform.position.y - (player.transform.GetComponent<Renderer> ().bounds.size.y / 2)) &&
+		    (player.transform.position.x + player.transform.GetComponent<Renderer> ().bounds.size.x) > (transform.position.x - transform.GetComponent<Renderer> ().bounds.size.x) &&
+		    (player.transform.position.x - player.transform.GetComponent<Renderer> ().bounds.size.x) < (transform.position.x + transform.GetComponent<Renderer> ().bounds.size.x) &&
+		    grounded) {
 			Debug.Log ("yoloswag");
-			enemyRigidbody.AddForce(new Vector2(0, 2.1f),ForceMode2D.Impulse);
+//			enemyRigidbody.AddForce(new Vector2(0, 0.2f));
+			enemyRigidbody.velocity = new Vector2 (enemyRigidbody.velocity.x, 5f);
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){

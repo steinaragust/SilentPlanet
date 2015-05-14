@@ -10,11 +10,27 @@ GameObject:
   - 4: {fileID: 415056}
   - 212: {fileID: 21209080}
   - 50: {fileID: 5055264}
-  - 61: {fileID: 6134896}
   - 114: {fileID: 11428674}
   - 58: {fileID: 5894142}
   m_Layer: 9
   m_Name: SmallEnemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &127698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 420196}
+  - 61: {fileID: 6148984}
+  - 61: {fileID: 6139168}
+  m_Layer: 15
+  m_Name: TheBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +45,21 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 129.759995, y: 48.1199989, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 420196}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &420196
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127698}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 415056}
   m_RootOrder: 0
 --- !u!50 &5055264
 Rigidbody2D:
@@ -60,19 +89,32 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 8.3768158
---- !u!61 &6134896
+--- !u!61 &6139168
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 126864}
-  m_Enabled: 0
+  m_GameObject: {fileID: 127698}
+  m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .983333349, y: 1.16666663}
+  m_Size: {x: 1, y: 1}
+--- !u!61 &6148984
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 127698}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: .00286102295}
+  serializedVersion: 2
+  m_Size: {x: .977121353, y: 1.17745316}
 --- !u!114 &11428674
 MonoBehaviour:
   m_ObjectHideFlags: 1
