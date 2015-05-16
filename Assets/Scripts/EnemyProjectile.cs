@@ -5,38 +5,44 @@ public class EnemyProjectile : MonoBehaviour {
 
 	public float speed;
 	public Player_Script player;
-//	public float rotationSpeed;
 	public int damageToGive;
 	private Rigidbody2D myRigidBody2D;
 	public HealthBarSwapper healthBarSwapper;
+	
+	public bool shot;
+	public Vector3 oldPlayer;
+	public float multiplier;
 
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<Player_Script> ();
 		myRigidBody2D = GetComponent<Rigidbody2D> ();
 		healthBarSwapper = FindObjectOfType<HealthBarSwapper> ();
-		if (player.transform.position.x < transform.position.x) {
-			speed = -speed;
-//			rotationSpeed = -rotationSpeed;
-		}
+		oldPlayer = player.transform.position - this.transform.position;
+		oldPlayer.Normalize ();
+		oldPlayer = oldPlayer * multiplier;
+		oldPlayer = oldPlayer + this.transform.position;
+		shot = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		myRigidBody2D.velocity = new Vector2 (speed, myRigidBody2D.velocity.y);
-//		Debug.Log ("speed: " + speed);
-//		myRigidBody2D.angularVelocity = rotationSpeed;
+		if (shot == true) {
+			this.transform.position = Vector2.MoveTowards(this.transform.position, oldPlayer, speed);
+		}
+		if (this.transform.position == oldPlayer) {
+			Destroy (gameObject);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other){	
 		if (other.name == "Player_Bird") {
-//			HealthManager.HurtPlayer(damageToGive);
-			healthBarSwapper.HurtPlayer(damageToGive);
-		}
-//		Destroy (gameObject); //HMM ??
+			Debug.Log ("dafuq");
+			healthBarSwapper.HurtPlayer (damageToGive);
+		} 
 	}
 
-	void OnCollisionEnter2D(){
+	void OnCollisionEnter2D(Collision2D other){
 		Destroy (gameObject);
 	}
 }

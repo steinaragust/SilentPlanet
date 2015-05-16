@@ -45,6 +45,7 @@ GameObject:
   - 114: {fileID: 11470876}
   - 114: {fileID: 11401822}
   - 50: {fileID: 5046494}
+  - 95: {fileID: 9575410}
   m_Layer: 9
   m_Name: EnemyBat
   m_TagString: Untagged
@@ -59,7 +60,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 197.080002, y: 37.9399986, z: 0}
+  m_LocalPosition: {x: 185.940002, y: 43.8600006, z: 0}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 480624}
@@ -118,21 +119,21 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: .159999996, y: .0649999976}
+    - - {x: .203536987, y: -.00341542577}
       - {x: .150000006, y: .174999997}
-      - {x: .189999998, y: .224999994}
-      - {x: .189999998, y: .275000006}
-      - {x: .0900000036, y: .264999986}
-      - {x: -.00999999978, y: .194999993}
-      - {x: -.140000001, y: .284999996}
-      - {x: -.189999998, y: .284999996}
-      - {x: -.189999998, y: -.144999996}
-      - {x: -.100000001, y: -.174999997}
-      - {x: -.100000001, y: -.284999996}
-      - {x: -.0199999996, y: -.284999996}
-      - {x: .0199999996, y: -.224999994}
+      - {x: .199330658, y: .169022888}
+      - {x: .177561447, y: .29054898}
+      - {x: .0806681365, y: .131278366}
+      - {x: -.000668843626, y: .185670227}
+      - {x: -.152437851, y: .29432869}
+      - {x: -.121584579, y: .0144468946}
+      - {x: .211163849, y: -.0921338424}
+      - {x: .120796204, y: -.153231308}
+      - {x: .117685959, y: -.157497406}
+      - {x: .0608545952, y: -.331645966}
+      - {x: .00134023034, y: -.246768951}
       - {x: .00999999978, y: -.0250000004}
-      - {x: .0599999987, y: -.0350000001}
+      - {x: .153294891, y: -.0598786697}
 --- !u!60 &6077734
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -161,6 +162,23 @@ PolygonCollider2D:
       - {x: .0199999996, y: -.224999994}
       - {x: .00999999978, y: -.0250000004}
       - {x: .0599999987, y: -.0350000001}
+--- !u!95 &9575410
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194246}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 75cc6369c4a16ed498511a38e94fe5a8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11401822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,10 +228,13 @@ MonoBehaviour:
     m_Bits: 2162688
   hittingWall: 0
   stunned: 0
-  howLongStunned: 3
+  howLongStunned: 10
+  stunnedFor: 0
   turnAroundTime: 2.5
   countdown: 0
   howMuchScale: 6
+  enemyAnimator: {fileID: 0}
+  number: 0
 --- !u!212 &21273906
 SpriteRenderer:
   m_ObjectHideFlags: 1
