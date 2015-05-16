@@ -3977,6 +3977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 0}
+  activated: 0
 --- !u!4 &260482093
 Transform:
   m_ObjectHideFlags: 0
@@ -5253,6 +5254,10 @@ Prefab:
       propertyPath: m_Name
       value: GrassSprite 21
       objectReference: {fileID: 0}
+    - target: {fileID: 408272, guid: 64df2ec590fb442408a227137c327267, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 3.3599999
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64df2ec590fb442408a227137c327267, type: 2}
   m_IsPrefabParent: 0
@@ -6217,12 +6222,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b5911fe7673bf4aa023fd6a73d8aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRange: 5
   enemyProjectile: {fileID: 128338, guid: 7a3527ed5b539a6498fc1454d8d5ab88, type: 2}
   player: {fileID: 0}
-  launchPoint: {fileID: 480324951}
-  checkEnemy: {fileID: 455811598}
   waitBetweenShots: 2
+  stunnedFor: 0
+  stunCounter: 0
+  stunned: 0
+  playerInRange: 0
+  oldPlayerPosition: {fileID: 0}
 --- !u!114 &455811598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15302,6 +15309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 0}
+  activated: 0
 --- !u!4 &1216930406
 Transform:
   m_ObjectHideFlags: 0
@@ -15323,11 +15331,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 408272, guid: 64df2ec590fb442408a227137c327267, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 107.5
+      value: 107.389999
       objectReference: {fileID: 0}
     - target: {fileID: 408272, guid: 64df2ec590fb442408a227137c327267, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -30.1000004
+      value: -30.6800003
       objectReference: {fileID: 0}
     - target: {fileID: 408272, guid: 64df2ec590fb442408a227137c327267, type: 2}
       propertyPath: m_LocalPosition.z
@@ -15355,11 +15363,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408272, guid: 64df2ec590fb442408a227137c327267, type: 2}
       propertyPath: m_LocalScale.x
-      value: 1.10000002
+      value: 1.16999996
       objectReference: {fileID: 0}
     - target: {fileID: 194628, guid: 64df2ec590fb442408a227137c327267, type: 2}
       propertyPath: m_Name
       value: GrassSprite 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 408272, guid: 64df2ec590fb442408a227137c327267, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 3.06999993
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199530, guid: 64df2ec590fb442408a227137c327267, type: 2}
+      propertyPath: m_Offset.x
+      value: 1.95625507e-05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199530, guid: 64df2ec590fb442408a227137c327267, type: 2}
+      propertyPath: m_Offset.y
+      value: -.000649800582
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199530, guid: 64df2ec590fb442408a227137c327267, type: 2}
+      propertyPath: m_Size.y
+      value: .981214523
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64df2ec590fb442408a227137c327267, type: 2}
@@ -15933,11 +15957,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 458082, guid: 3957e089767dc474ea1fb74d8601b5a7, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 209.91243
+      value: 209.729996
       objectReference: {fileID: 0}
     - target: {fileID: 458082, guid: 3957e089767dc474ea1fb74d8601b5a7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -8.3022871
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 458082, guid: 3957e089767dc474ea1fb74d8601b5a7, type: 2}
       propertyPath: m_LocalPosition.z
@@ -17739,6 +17763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 0}
+  activated: 0
 --- !u!4 &1385605489
 Transform:
   m_ObjectHideFlags: 0
@@ -20757,12 +20782,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b5911fe7673bf4aa023fd6a73d8aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRange: 5
   enemyProjectile: {fileID: 128338, guid: 7a3527ed5b539a6498fc1454d8d5ab88, type: 2}
   player: {fileID: 0}
-  launchPoint: {fileID: 1699720771}
-  checkEnemy: {fileID: 1647587157}
   waitBetweenShots: 2
+  stunnedFor: 0
+  stunCounter: 0
+  stunned: 0
+  playerInRange: 0
+  oldPlayerPosition: {fileID: 0}
 --- !u!114 &1647587157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23121,12 +23148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b5911fe7673bf4aa023fd6a73d8aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRange: 5
   enemyProjectile: {fileID: 128338, guid: 7a3527ed5b539a6498fc1454d8d5ab88, type: 2}
   player: {fileID: 0}
-  launchPoint: {fileID: 1398984870}
-  checkEnemy: {fileID: 1815592285}
   waitBetweenShots: 2
+  stunnedFor: 0
+  stunCounter: 0
+  stunned: 0
+  playerInRange: 0
+  oldPlayerPosition: {fileID: 0}
 --- !u!114 &1815592285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27667,6 +27696,10 @@ Prefab:
     - target: {fileID: 194628, guid: 64df2ec590fb442408a227137c327267, type: 2}
       propertyPath: m_Name
       value: GrassSprite 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 408272, guid: 64df2ec590fb442408a227137c327267, type: 2}
+      propertyPath: m_LocalScale.y
+      value: .800000012
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 64df2ec590fb442408a227137c327267, type: 2}
