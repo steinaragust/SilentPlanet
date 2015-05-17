@@ -35,14 +35,17 @@ public class EnemyProjectile : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D other){	
+	void OnTriggerEnter2D(Collider2D other){
 		if (other.name == "Player_Bird") {
 			Debug.Log ("dafuq");
 			healthBarSwapper.HurtPlayer (damageToGive);
+			Destroy(gameObject);
 		} 
 	}
 
 	void OnCollisionEnter2D(Collision2D other){
-		Destroy (gameObject);
-	}
+		if (other.transform.name != "Player_Bird") {
+			Destroy(gameObject);
+		} 
+	} 
 }
