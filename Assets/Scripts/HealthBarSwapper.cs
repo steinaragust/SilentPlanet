@@ -10,9 +10,11 @@ public class HealthBarSwapper : MonoBehaviour {
 	private LevelManager levelManager;
 	public bool isDead;
 	public Image image;
+	private Player_Script playerScript;
 
 	// Use this for initialization
 	void Start () {
+		playerScript = GameObject.Find ("Player_Bird").GetComponent<Player_Script>();
 		image = GetComponent<Image> ();
 		playerHealth = maxPlayerHealth;
 		levelManager = FindObjectOfType<LevelManager> ();
@@ -23,9 +25,10 @@ public class HealthBarSwapper : MonoBehaviour {
 	void Update () {
 		if (playerHealth <= 0 && !isDead) {
 			playerHealth = 0;
-			levelManager.RespawnPlayer();
+			levelManager.RespawnPlayer ();
 			isDead = true;
-		}
+			playerScript.isDead = true;
+		} 
 		updateHud ();
 	}
 

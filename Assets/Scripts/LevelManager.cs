@@ -8,26 +8,45 @@ public class LevelManager : MonoBehaviour {
 
 	public GameObject deathParticle;
 	public GameObject respawnParticle;
-
+	
 	public float respawnDelay;
-	private Camera_Script camera;
-//	public GameObject camera;
+	public Camera_Script mainCamera;
+	//private PlayerAnimation playerStatus;
+    //public GameObject mainCamera;
 
 //	public HealthManager healthManager;
 	public HealthBarSwapper healthBarSwapper;
 
 	public AudioSource pickup;
+	public AudioSource grappleShoot;
+	public AudioSource grappleHitVine;
+	public AudioSource playerRunning;
+
 
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<Player_Script> ();
-		camera = FindObjectOfType<Camera_Script> ();
+		mainCamera = GameObject.Find ("Main Camera").GetComponent<Camera_Script> ();
 		healthBarSwapper = FindObjectOfType<HealthBarSwapper> ();
+		//playerStatus = GameObject.Find ("PlayerAnimation").GetComponent<PlayerAnimation> ();
+
+		grappleShoot = GameObject.Find ("GrapplingHookShoot").GetComponent<AudioSource> ();
+		grappleHitVine = GameObject.Find ("GrapplingHookHitVine").GetComponent<AudioSource> ();
+		playerRunning = GameObject.Find ("PlayerRunning").GetComponent<AudioSource> ();
+		playerRunning.Play ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if ((player.move > 0f || player.move < 0f) && !playerRunning.isPlaying && player.grounded) {
+			Debug.Log ("play");
+			//playerRunning.Play();
+			playerRunning.UnPause();
+		} else if(player.move == 0f && playerRunning.isPlaying || !player.grounded || player.isDead) {
+			Debug.Log ("stop");
+			//playerRunning.Stop();
+			playerRunning.Pause();
+		}
 	}
 
 	public void RespawnPlayer(){
@@ -39,7 +58,7 @@ public class LevelManager : MonoBehaviour {
 		Instantiate (deathParticle, player.transform.position, player.transform.rotation);
 		player.enabled = false;
 		player.GetComponent<Renderer> ().enabled = false;
-		camera.GetComponent<Camera_Script>().isFollowing = false;
+		mainCamera.isFollowing = false;
 //		Debug.Log ("Player respawn here!");
 		yield return new WaitForSeconds (respawnDelay);
 		player.GetComponent<Rigidbody2D> ().velocity = new Vector2 (0f, 0f);
@@ -48,11 +67,22 @@ public class LevelManager : MonoBehaviour {
 		player.GetComponent<Renderer> ().enabled = true;
 		healthBarSwapper.FullHealth ();
 		healthBarSwapper.isDead = false;
-		camera.isFollowing = true;
+		mainCamera.isFollowing = true;
+		player.isDead = false;
 		Instantiate (respawnParticle, currentCheckpoint.transform.position, currentCheckpoint.transform.rotation);
 	}
 
 	public void playPickupSound(){
 		pickup.Play ();
 	}
+
+	public void playGrappleShoot(){
+		grappleShoot.Play ();
+	}
+
+	public void playGrappleHitVine(){
+		grappleHitVine.Play ();
+	}
+
+
 }

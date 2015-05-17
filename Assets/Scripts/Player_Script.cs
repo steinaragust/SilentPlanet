@@ -2,13 +2,34 @@ using UnityEngine;
 using System.Collections;
 
 public class Player_Script : MonoBehaviour {
+
+	//GAMEPAD GLOBALS BEGIN
+	[HideInInspector] public bool GPAD_JUMP;
+	[HideInInspector] public bool GPAD_SHOOT_HOLD;
+	[HideInInspector] public bool GPAD_SHOOT_DOWN;
+	[HideInInspector] public bool GPAD_SHOOT_UP;
+	[HideInInspector] public bool GPAD_L1;
+	[HideInInspector] public bool GPAD_LANALOG_RIGHT;
+	[HideInInspector] public bool GPAD_LANALOG_LEFT;
+	[HideInInspector] public bool GPAD_LANALOG_UP;
+	[HideInInspector] public bool GPAD_LANALOG_DOWN;
+	[HideInInspector] public bool GPAD_R2_TRIGGER;
+	[HideInInspector] public bool GPAD_L2_TRIGGER;
+	[HideInInspector] public bool GPAD_START;
+	public float GPAD_TRIGGER_VALUE;
+	public float GPAD_RANALOG_VALUE_X;
+	public float GPAD_RANALOG_VALUE_Y;
+	//GAMEPAD GLOBALS END
 	
 	
 	public bool grounded;
 	public bool falling;
+	public bool isDead;
+	public bool wallJump;
 	public float velocityX;
 	public float velocityY;
 	public float move;
+	public float moveVertical;
 	public bool hasGrapplingHook;
 	public GameObject grapplingHook;
 	
@@ -33,7 +54,7 @@ public class Player_Script : MonoBehaviour {
 	public LayerMask whatIsGround;
 	
 	
-	private bool wasGrappled = false;
+	public bool wasGrappled = false;
 	
 	//	public Transform startPos; // for casting rays to see if we are grounded
 	//	public Transform endPos;   // -------------------""---------------------
@@ -96,12 +117,16 @@ public class Player_Script : MonoBehaviour {
 	private bool retractingTheHook = false;
 	public Transform hitPositionTempObj;
 	private float jumpTimer = 0;
+
+	//SOUND
+	private LevelManager sound;
 	
 	//private float move; // The horizontal movement input by the player's controls
 	
 	// Use this for initialization
 	void Start () {
-		//Cursor.visible = false;
+
+		Cursor.visible = false;
 		
 		playerRigidBody = this.GetComponent<Rigidbody2D>(); // Get RigidBody component of the player
 		
@@ -123,6 +148,9 @@ public class Player_Script : MonoBehaviour {
 		oldRopeSegmentLengths = new Stack();
 		
 		theActualHook.SetActive(false);
+
+		sound = GameObject.Find ("Level Manager").GetComponent<LevelManager>();
+
 	}
 	
 	
@@ -150,19 +178,78 @@ public class Player_Script : MonoBehaviour {
 		// --------------------------------
 		
 		move = Input.GetAxisRaw ("Horizontal");
+		moveVertical = Input.GetAxisRaw ("Vertical");
 		
 		velocityX = playerRigidBody.velocity.x;
 		velocityY = playerRigidBody.velocity.y;
+
+		//GAMEPAD SETTINGS BEGIN
+		GPAD_JUMP = Input.GetButtonDown ("X");
+		GPAD_SHOOT_HOLD = Input.GetButton ("R1");
+		GPAD_SHOOT_DOWN = Input.GetButtonDown ("R1");
+		GPAD_SHOOT_UP = Input.GetButtonUp ("R1");
+		GPAD_L1 = Input.GetButton ("L1");
+		GPAD_START = Input.GetButton ("Start");
+		GPAD_TRIGGER_VALUE = Input.GetAxis ("Triggers");
+		GPAD_RANALOG_VALUE_X = Input.GetAxis ("R_analog_horz");
+		GPAD_RANALOG_VALUE_Y = Input.GetAxis ("R_analog_vert") * -1;
+
+		//if player is moving left analog stick right
+		if (move > 0.1f) {
+			GPAD_LANALOG_RIGHT = true;
+		} else {
+			GPAD_LANALOG_RIGHT = false;
+		}
+
+		//if player is moving left analog stick left
+		if (move < -0.1f) {
+			GPAD_LANALOG_LEFT = true;
+		} else {
+			GPAD_LANALOG_LEFT = false;
+		}
+
+		//if player is moving left analog stick up
+		if (moveVertical > 0.9f) {
+			GPAD_LANALOG_UP = true;
+		} else {
+			GPAD_LANALOG_UP = false;
+		}
+		
+		//if player is moving left analog stick down
+		if (moveVertical < -0.9f) {
+			GPAD_LANALOG_DOWN = true;
+		} else {
+			GPAD_LANALOG_DOWN = false;
+		}
+
+		//if player is holding down L2 trigger
+		if (GPAD_TRIGGER_VALUE > 0.9f) {
+			GPAD_L2_TRIGGER = true;
+		} else {
+			GPAD_L2_TRIGGER = false;
+		}
+
+		//if player is holding down R2 trigger
+		if (GPAD_TRIGGER_VALUE < -0.1f) {
+			GPAD_R2_TRIGGER = true;
+		} else {
+			GPAD_R2_TRIGGER = false;
+		}
+
+		//GAMEPAD SETTINGS END
+
 		
 		//checks if player is falling
-		if (playerRigidBody.velocity.y < 0 && !isGrappled) {falling = true;}
-		else{falling = false;}
+		if (playerRigidBody.velocity.y < 0 && !isGrappled) {
+			falling = true;
+		} else {
+			falling = false;
+		}
 		
 		if (!hasGrapplingHook) {
-			grapplingHook.SetActive(false);
-		} 
-		else {
-			grapplingHook.SetActive(true);
+			grapplingHook.SetActive (false);
+		} else {
+			grapplingHook.SetActive (true);
 		}
 		
 		// -----------------------------------------
@@ -170,42 +257,38 @@ public class Player_Script : MonoBehaviour {
 		if (creatRopeNow == true) {
 			creatRopeNow = false;
 			shootingHook = false;
-			activateTheRope();
+			activateTheRope ();
 		}
 		
 		// called if the left-mousebutton is pressed
-		if ((Input.GetMouseButtonDown (0) && !shootingHook) && !hasDistraction && hasGrapplingHook) {
+		if (((Input.GetMouseButtonDown (0) || GPAD_SHOOT_DOWN) && !shootingHook) && !hasDistraction && hasGrapplingHook) {
 			shootGrapplingHook ();
 		}
 		
 		// If you are grappling a surface and you are holding down the left mouse button
-		else if (((Input.GetMouseButton (0) && !shootingHook ) && isGrappled) && !hasDistraction && hasGrapplingHook) {
+		else if ((((Input.GetMouseButton (0) || GPAD_SHOOT_HOLD) && !shootingHook) && isGrappled) && !hasDistraction && hasGrapplingHook) {
 			movementWhileGrappled ();
 		}
 		
 		// To let go of the grappling hook
-		else if (Input.GetMouseButtonUp (0) && !shootingHook && !hasDistraction && hasGrapplingHook && isGrappled) {
+		else if ((Input.GetMouseButtonUp (0) || GPAD_SHOOT_UP) && !shootingHook && !hasDistraction && hasGrapplingHook && isGrappled) {
 			letGo ();
-			theActualHook.SetActive(false);
+			theActualHook.SetActive (false);
 		}
 		
 		//--This is the standard moveset--
 		else {
 			//--While hook is travelling to the grapplable surface and the player is holdin the left mausebutton---
-			if(Input.GetMouseButton (0) && !retractingTheHook && shootingHook && !hasDistraction && hasGrapplingHook && !isGrappled)
-			{
-				grapplingHookIsTravelling();
-			}
-			else if(retractingTheHook)
-			{
-				retractingGrappelingHook();
+			if ((Input.GetMouseButton (0) || GPAD_SHOOT_HOLD) && !retractingTheHook && shootingHook && !hasDistraction && hasGrapplingHook && !isGrappled) {
+				grapplingHookIsTravelling ();
+			} else if (retractingTheHook) {
+				retractingGrappelingHook ();
 			}
 			// If player releases the left mousebutton while the hook is still traveling to the grapplable surface then it is stopped
-			else if(Input.GetMouseButtonUp(0) && shootingHook && !hasDistraction && hasGrapplingHook && !isGrappled)
-			{
+			else if ((Input.GetMouseButtonUp (0) || GPAD_SHOOT_UP) && shootingHook && !hasDistraction && hasGrapplingHook && !isGrappled) {
 				shootingHook = false;
 				rope.enabled = false;
-				theActualHook.SetActive(false);
+				theActualHook.SetActive (false);
 			}
 			
 			//-------------------------------------------
@@ -219,19 +302,17 @@ public class Player_Script : MonoBehaviour {
 			}
 			*/
 			
-			huggingLeftWall = Physics2D.OverlapArea(leftWallCheckPoint1.position, leftWallCheckPoint2.position, WhatIsWall);
-			huggingRightWall = Physics2D.OverlapArea(rightWallCheckPoint1.position, rightWallCheckPoint2.position, WhatIsWall);
+			huggingLeftWall = Physics2D.OverlapArea (leftWallCheckPoint1.position, leftWallCheckPoint2.position, WhatIsWall);
+			huggingRightWall = Physics2D.OverlapArea (rightWallCheckPoint1.position, rightWallCheckPoint2.position, WhatIsWall);
 			
-			if(hasDistraction)
-			{
-				if(distractionDelay > 0 && distractionTransforms != null) {
+			if (hasDistraction) {
+				if (distractionDelay > 0 && distractionTransforms != null) {
 					distractionDelay -= Time.deltaTime;
 					hitObject.transform.position = distractionTransforms.position;
 					hitPosition = hitObject.transform.position;
 					rope.enabled = true;
-					redrawRope();
-				}
-				else {
+					redrawRope ();
+				} else {
 					hasDistraction = false;
 					rope.enabled = false;
 				}
@@ -241,7 +322,7 @@ public class Player_Script : MonoBehaviour {
 			
 			//--Main ground movement--
 			if (grounded) {
-				normalPlayerMovement();
+				normalPlayerMovement ();
 			}
 			
 			//--movement after detaching the grapple hook--
@@ -251,73 +332,81 @@ public class Player_Script : MonoBehaviour {
 			
 			//--Main air movement--
 			else {
-				jumpPlayerMovement();
+				jumpPlayerMovement ();
 			}
 			
 			// Walljump on left wall
-			if(Input.GetKeyDown(KeyCode.Space) && huggingLeftWall && !grounded)
-			{
-				knockPlayer(true);
+			if ((Input.GetKeyDown (KeyCode.Space) || GPAD_JUMP) && huggingLeftWall && !grounded) {
+				knockPlayer (true);
+				wallJump = true;
 			}
 			// Walljump on right wall
-			else if(Input.GetKeyDown(KeyCode.Space) && huggingRightWall && !grounded)
-			{
-				knockPlayer(false);
+			else if ((Input.GetKeyDown (KeyCode.Space) || GPAD_JUMP) && huggingRightWall && !grounded) {
+				knockPlayer (false);
+				wallJump = true;
 			}
 			//--Main jump code--
-			else if ((Input.GetKeyDown (KeyCode.Space) && (jumpTimer <= 0)/*|| Input.GetKeyDown(KeyCode.W)*//*|| Input.GetButtonDown("Fire1")*/) && grounded) {
-			          //playerRigidBody.drag = 0.25f;
-			          jumpTimer = 0.3f;
-			          mainJump();
-			          }
+			else if (((Input.GetKeyDown (KeyCode.Space) || GPAD_JUMP) && (jumpTimer <= 0)) && grounded) {
+				//playerRigidBody.drag = 0.25f;
+				wallJump = false;
+				jumpTimer = 0.3f;
+				mainJump ();
+			}
 			          
-			          jumpTimer -= Time.deltaTime;
-			          //Debug.Log (Time.deltaTime);
-			          }
-			          }
+			jumpTimer -= Time.deltaTime;
+			//Debug.Log (Time.deltaTime);
+		}
+	}
 			          
-			          
-			          public void shootGrapplingHook()
-			          {
-				// Gets the direction of the mouse relative to the player(the direction that he tried to shoot the grappling hook)
-				Vector3 mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-				mouseDirection.Normalize(); // A little Linear Algebra to get the direction vector
-				
-				// Casts a ray to see if the player shot at a grapplable surface
-				RaycastHit2D hit = Physics2D.Raycast(shooter.position, mouseDirection, maxRopeLength, layersDetectedByHook);
-				
-				if (hit.collider != null) {
-					if (hit.collider.gameObject.layer == LayerMask.NameToLayer ("Grapplabe")) { // true when we hit a grapplable surface
-						shootingHook = true;
-						hitObject.transform.position = transform.position;
-						hitPositionTempObj.position = hit.point;
-						hookCollisionHit = hit;
-						didWeHitGrapplabe = true;
-					} else if (hit.collider.gameObject.layer == LayerMask.NameToLayer ("TrapsForEnemys")) {
-						Rigidbody2D distractionObject = hit.collider.GetComponent<Rigidbody2D> ();
-						distractionObject.isKinematic = false;
-						distractionTransforms = hit.collider.GetComponent<Transform> ();
-						hasDistraction = true;
-						distractionDelay = 0.5f;
-					} else {
-						didWeHitGrapplabe = false;
-						shootingHook = true;
-						hitPositionTempObj.position = hit.point;
-						hitObject.transform.position = transform.position;
+			 	         
+	public void shootGrapplingHook(){
+
+			sound.playGrappleShoot ();
+
+			// Gets the direction of the mouse relative to the player(the direction that he tried to shoot the grappling hook)
+			Vector3 mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+			mouseDirection.Normalize(); // A little Linear Algebra to get the direction vector
+			
+			// Casts a ray to see if the player shot at a grapplable surface
+			RaycastHit2D hit = Physics2D.Raycast(shooter.position, mouseDirection, maxRopeLength, layersDetectedByHook);
+			
+			if (hit.collider != null) {
+				if (hit.collider.gameObject.layer == LayerMask.NameToLayer ("Grapplabe")) { // true when we hit a grapplable surface
+					
+					if(hit.collider.gameObject.tag == "Vine"){		
+						sound.playGrappleHitVine();
 					}
-				}
-				else {
-					// Setting up the parameters for the failed grappling animation
+
+					shootingHook = true;
+					hitObject.transform.position = transform.position;
+					hitPositionTempObj.position = hit.point;
+					hookCollisionHit = hit;
+					didWeHitGrapplabe = true;
+				} else if (hit.collider.gameObject.layer == LayerMask.NameToLayer ("TrapsForEnemys")) {
+					Rigidbody2D distractionObject = hit.collider.GetComponent<Rigidbody2D> ();
+					distractionObject.isKinematic = false;
+					distractionTransforms = hit.collider.GetComponent<Transform> ();
+					hasDistraction = true;
+					distractionDelay = 0.5f;
+				} else {
 					didWeHitGrapplabe = false;
 					shootingHook = true;
-					//hitPositionTempObj.position = new Vector3(transform.position.x + (mouseDirection.x * maxRopeLength), transform.position.y + (mouseDirection.y * maxRopeLength), 0);
-					hitPositionTempObj.position = transform.position;
-					hitPositionTempObj.LookAt(new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
-					hitPositionTempObj.Translate(0, 0, maxRopeLength, Space.Self);
-					
+					hitPositionTempObj.position = hit.point;
 					hitObject.transform.position = transform.position;
 				}
 			}
+			else {
+				// Setting up the parameters for the failed grappling animation
+				didWeHitGrapplabe = false;
+				shootingHook = true;
+				//hitPositionTempObj.position = new Vector3(transform.position.x + (mouseDirection.x * maxRopeLength), transform.position.y + (mouseDirection.y * maxRopeLength), 0);
+				hitPositionTempObj.position = transform.position;
+				hitPositionTempObj.LookAt(new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0));
+				hitPositionTempObj.Translate(0, 0, maxRopeLength, Space.Self);
+				
+				hitObject.transform.position = transform.position;
+			}
+		}
 			
 			public void grapplingHookIsTravelling()
 			{
@@ -396,24 +485,24 @@ public class Player_Script : MonoBehaviour {
 				}
 				
 				//--Swing right on rope (When D key is pressed)--
-				if (Input.GetKey (KeyCode.D)) {
+				if (Input.GetKey (KeyCode.D) || GPAD_LANALOG_RIGHT) {
 					//Debug.Log("Grappling Movement Run");
-					playerRigidBody.AddForce(new Vector2(ropeSwingSpeed * 72 * Time.deltaTime, 0));
+					playerRigidBody.AddForce(new Vector2(move * ropeSwingSpeed * 72 * Time.deltaTime, 0));
 				}
 				
 				//--Swing left on rope (When A key is pressed)--
-				if (Input.GetKey (KeyCode.A)) {
+				if (Input.GetKey (KeyCode.A) || GPAD_LANALOG_LEFT) {
 					//Debug.Log("Grappling Movement Run");
-					playerRigidBody.AddForce(new Vector2(-ropeSwingSpeed * 72 * Time.deltaTime, 0));
+					playerRigidBody.AddForce(new Vector2(move * ropeSwingSpeed * 72 * Time.deltaTime, 0));
 				}
 				
 				//--Reel in the rope--
-				if(Input.GetKey(KeyCode.W) || Input.GetMouseButton (1)) {
+				if(Input.GetKey(KeyCode.W) || Input.GetMouseButton (1) || GPAD_R2_TRIGGER || GPAD_LANALOG_UP) {
 					grapple.distance = grapple.distance - (ropeReelSpeed * 68 * Time.deltaTime);
 				}
 				
 				//--Loosen the rope--
-				if(Input.GetKey(KeyCode.S)) {
+				if(Input.GetKey(KeyCode.S) || GPAD_L2_TRIGGER || GPAD_LANALOG_DOWN) {
 					// Make shure we don't extend the rope beyond the maximum length of the rope
 					if((grapple.distance + oldRopeTotalLength) <= maxRopeLength){
 						grapple.distance = grapple.distance + (ropeReelSpeed * 68 * Time.deltaTime);
@@ -440,6 +529,8 @@ public class Player_Script : MonoBehaviour {
 			public void normalPlayerMovement()
 			{
 				//BÆTT INN!!!!!!
+
+				wallJump = false;
 				
 				//Debug.Log (playerRigidBody.velocity.x);
 				if ((knockBackCount <= 0)/* && (Mathf.Abs(playerRigidBody.velocity.x) <= 5.7)*/) 
@@ -458,7 +549,7 @@ public class Player_Script : MonoBehaviour {
 					//else {
 					//playerRigidBody.drag = 2.75f;
 					
-					playerRigidBody.AddForce(new Vector2(move * 33 * 65, 0)*Time.deltaTime,ForceMode2D.Force);  //33   => 33 * 70
+					playerRigidBody.AddForce(new Vector2(move * 33 * 65, 0) * Time.deltaTime,ForceMode2D.Force);  //33   => 33 * 70
 					
 					// * ...21.8f...20...18.5f..19.6f...22...32...32.6f
 					//}
@@ -646,4 +737,4 @@ public class Player_Script : MonoBehaviour {
 			knockBackCount = knockBackLength;
 		}*/
 			}
-			}
+}

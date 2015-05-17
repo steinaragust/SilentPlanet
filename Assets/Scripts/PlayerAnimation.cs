@@ -9,7 +9,16 @@ public class PlayerAnimation : MonoBehaviour {
 	//private float verticalMovement; // The amount of vertical movement
 	//private bool onGround; // Flag to check whether the character is on the ground
 	private Player_Script player;
-	public bool right;
+	public bool turningRight;
+	public bool isDead;
+	public bool running;
+	public bool wallHugging;
+	public bool jumping;
+	public float rotationTime;
+	public bool mouseOnRightSide;
+	public bool gamepadRAnalogOnRightSide;
+	public bool lookAtMouseGrappled = true;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("Player_Bird").GetComponent<Player_Script> ();
@@ -17,34 +26,89 @@ public class PlayerAnimation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		//tells if the mouse is on the right of the player
+		mouseOnRightSide = (GameObject.Find ("Player_Bird").transform.position.x < Camera.main.ScreenToWorldPoint (Input.mousePosition).x);
+		gamepadRAnalogOnRightSide = (player.GPAD_RANALOG_VALUE_X > 0f);
+
+		Debug.Log (gamepadRAnalogOnRightSide? "right side" : "left side");
+
+		
+		wallHugging = (player.huggingLeftWall || player.huggingRightWall);
+		jumping = (!player.grounded && !player.isGrappled);
+
 		if (player.move != 0) {
-			anim.SetBool ("Running", true);
-
-
+			running = true;
 			//if player is moving left
-			//Rotate(float xAngle, float yAngle, float zAngle, Space relativeTo = Space.Self);
-			//if(player.move < 0.0f && player.move >= -1.0f){
-			//	right = false;
-				//if animation is rotated right, flip, else do nothing
-			//	if(!(transform.rotation.y > 179.0f)) 
-					//transform.Rotate(0.0f, 180.0f, 0.0f);
-			//}
-			//else{
-			//	if(!(transform.rotation.y < 0.3f)) 
-			//		transform.Rotate(0.0f, 180.0f, 0.0f);
-			//	right = true;
-				//transform.Rotate(0.0f, -180.0f, 0.0f);
+			if (player.move < 0.0f && player.move >= -1.0f) {
+				turningRight =  false;
+			} 
+			else {
+				turningRight = true;
+			}
+		} else {running = false;}
+
+		isDead = player.isDead;
+
+		if (turningRight) {
+			Debug.Log ("turning right");
+	
+			if(player.huggingRightWall && !player.grounded){
+				//make player look away from wall if he's in the air and hugging wall
+				transform.rotation = Quaternion.AngleAxis (180f, Vector3.up);
+				turningRight = false;
+			}
+			else if(player.isGrappled){
+
+				if(lookAtMouseGrappled){
+					//makes player look at direction of mouse when grappled
+					if(mouseOnRightSide || gamepadRAnalogOnRightSide){ 
+						transform.rotation = Quaternion.AngleAxis (0f, Vector3.up);
+					} else{
+						transform.rotation = Quaternion.AngleAxis (180f, Vector3.up); 
+						turningRight = false;
+					}
+				}
+			}
+			else{
+				//turn player normally
+				//Quaternion angleaxis = Quaternion.AngleAxis(0f, Vector3.up);
+				//transform.rotation = Quaternion.Slerp(transform.rotation, angleaxis, rotationTime);
+
+				transform.rotation = Quaternion.AngleAxis (0f, Vector3.up);
+			}
+
+		} else {
+			Debug.Log ("turning left");
+			if(player.huggingLeftWall && !player.grounded){
+				//make player look away from wall if he's in the air and hugging wall
+				transform.rotation = Quaternion.AngleAxis (0f, Vector3.up);
+				turningRight = true;
+			} else if(player.isGrappled){
+
+				if(lookAtMouseGrappled){
+					//makes player look at direction of mouse when grappled
+					if(mouseOnRightSide || gamepadRAnalogOnRightSide){ 
+						transform.rotation = Quaternion.AngleAxis (0f, Vector3.up);
+						turningRight = true;
+					} else{
+						transform.rotation = Quaternion.AngleAxis (180f, Vector3.up); 
+					}
+				}
+			} 
+			else{
+				//turn player normally
+				//Quaternion angleaxis2 = Quaternion.AngleAxis(180f, Vector3.up);
+				//transform.rotation = Quaternion.Slerp(transform.rotation, angleaxis2, rotationTime);
+
+				transform.rotation = Quaternion.AngleAxis (180f, Vector3.up);
+			}
+				
 		}
-		 else {
-			anim.SetBool ("Running", false);
-		}
 
-		//transform.Rotate (0f, player.move * 180, 0f);
-		//Debug.Log (transform.rotation.y);
-		anim.SetBool ("Jumping", (!player.grounded && !player.isGrappled));
-
-
-
-
+		//if player is not touching ground and is not grappled, play jump animation
+		anim.SetBool ("Jumping", jumping);
+		anim.SetBool ("Dead", isDead);
+		anim.SetBool ("Running", running);
 	}
 }

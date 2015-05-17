@@ -15,6 +15,7 @@ TagManager:
   - TrapsForEnemys
   - GrapplingHook
   - GrapplingHookPickup
+  - Vine
   layers:
   - Default
   - TransparentFX

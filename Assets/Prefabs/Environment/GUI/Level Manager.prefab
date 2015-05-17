@@ -141,6 +141,7 @@ MonoBehaviour:
   deathParticle: {fileID: 159014, guid: c83c289852df2bb448908cee4cbc3af6, type: 2}
   respawnParticle: {fileID: 143374, guid: 53709503b93d36647ac1aa2f208d77e6, type: 2}
   respawnDelay: 1.5
+  mainCamera: {fileID: 0}
   healthBarSwapper: {fileID: 0}
   pickup: {fileID: 8279622}
 --- !u!1001 &100100000
