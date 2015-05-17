@@ -31,7 +31,7 @@ public class ShootAtPlayerInRange : MonoBehaviour {
 		}
 		if (playerInRange && shotCounter < 0) {
 			shotCounter = waitBetweenShots;
-			//GameObject yolo = Instantiate(enemyProjectile, transform.position, player.transform.rotation) as GameObject;
+			GameObject yolo = Instantiate(enemyProjectile, transform.position, player.transform.rotation) as GameObject;
 			Debug.Log ("Launching missile");
 //			yolo.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(new Vector3(player.transform.position.x * speed, player.transform.position.y * speed, 1));
 //			currentProjectile = Instantiate(enemyProjectile);
