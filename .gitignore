@@ -8,6 +8,13 @@
 *_Data/
 Assets/IgnoredScenes/*.unity
 Assets/IgnoredScenes/*.unity.meta
+Assets/Levels/*.unity
+Assets/Levels/*.unity.meta
+Assets/Animations/Player_animation
+
+#random shit
+Thumbs.db
+Thumbs.db.meta
 
 
 

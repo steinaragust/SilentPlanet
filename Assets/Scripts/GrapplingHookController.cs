@@ -60,8 +60,8 @@ public class GrapplingHookController : MonoBehaviour {
 			pScript.transform.rotation = Quaternion.Slerp(pScript.transform.rotation, target, Time.deltaTime * afterGrappleSmooth);
 		}*/
 
-		rAnalogX = Input.GetAxis ("R_analog_horz");
-		rAnalogY = Input.GetAxis ("R_analog_vert") * -1;
+		rAnalogX = pScript.GPAD_RANALOG_VALUE_X;
+		rAnalogY = pScript.GPAD_RANALOG_VALUE_Y;
 
 		if (useGamepad) {
 			// ROTATE A GUN OBJECT AROUND THE Z-AXIS

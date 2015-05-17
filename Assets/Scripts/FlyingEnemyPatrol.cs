@@ -69,12 +69,14 @@ public class FlyingEnemyPatrol : MonoBehaviour {
 		if (moveRight) {
 			//			Debug.Log ("moving right");
 			//			Debug.Log ("speed of: " + gameObject.name + ": " + GetComponent<Rigidbody2D>().velocity.x);
+//			transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
 			transform.localScale = new Vector3(-howMuchScale, howMuchScale, howMuchScale);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		} 
 		else {
 			//			Debug.Log ("moving left");
 			//			Debug.Log ("speed of: " + gameObject.name + ": " + GetComponent<Rigidbody2D>().velocity.x);
+//			transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 			transform.localScale = new Vector3(howMuchScale, howMuchScale, howMuchScale);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		}

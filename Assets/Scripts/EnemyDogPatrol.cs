@@ -2,7 +2,10 @@
 using System.Collections;
 
 public class EnemyDogPatrol : MonoBehaviour {
-	
+	private Animator animator;
+
+	public float enemyScaling = 1;
+
 	public float moveSpeed;
 	public bool moveRight;
 	
@@ -29,10 +32,11 @@ public class EnemyDogPatrol : MonoBehaviour {
 	public Transform groundCheck;
 	public float groundCheckRadius;
 	public LayerMask whatIsGround;
-	private bool grounded;
+	public bool grounded;
 
 	// Use this for initialization
 	void Start () {
+		animator = this.GetComponent<Animator>();
 		enemyRigidbody = this.GetComponent<Rigidbody2D> ();
 		stunned = false;
 		player = FindObjectOfType<Player_Script> ();
@@ -40,6 +44,9 @@ public class EnemyDogPatrol : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
+		if (grounded) {
+			animator.SetBool("isJumping", false);
+		}
 		if (stunnedFor > 0) {
 			stunnedFor -= Time.deltaTime;
 			return;
@@ -59,31 +66,35 @@ public class EnemyDogPatrol : MonoBehaviour {
 			moveRight = !moveRight;
 		}
 		if (player.transform.position.x < transform.position.x + playerRange && player.transform.position.x > transform.position.x - playerRange) {
+			animator.SetBool("isWalking", false);
 			moveSpeed = moveSpeedIncrease;
 		} 
 		else {
+			animator.SetBool("isWalking", true);
 			moveSpeed = normalMoveSpeed;
 		}
 		if (moveRight) {
 			//			Debug.Log ("moving right");
 			//			Debug.Log ("speed of: " + gameObject.name + ": " + GetComponent<Rigidbody2D>().velocity.x);
-			transform.localScale = new Vector3(-1f, 1f, 1f);
+			//animator.SetBool("isWalking", false);
+			transform.localScale = new Vector3(-enemyScaling, enemyScaling, enemyScaling);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		} 
 		else {
 			//			Debug.Log ("moving left");
 			//			Debug.Log ("speed of: " + gameObject.name + ": " + GetComponent<Rigidbody2D>().velocity.x);
-			transform.localScale = new Vector3(1f, 1f, 1f);
+			transform.localScale = new Vector3(enemyScaling, enemyScaling, enemyScaling);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		}
 //		Debug.Log ("bounds size: " + player.transform.GetComponent<Renderer> ().bounds.size.y);
-		if ((transform.position.y + (transform.GetComponent<Renderer> ().bounds.size.y * 2)) < (player.transform.position.y - (player.transform.GetComponent<Renderer> ().bounds.size.y / 2)) &&
+		if ((transform.position.y + (transform.GetComponent<Renderer> ().bounds.size.y / 2)) < (player.transform.position.y - (player.transform.GetComponent<Renderer> ().bounds.size.y / 2)) &&
 		    (player.transform.position.x + player.transform.GetComponent<Renderer> ().bounds.size.x) > (transform.position.x - transform.GetComponent<Renderer> ().bounds.size.x) &&
 		    (player.transform.position.x - player.transform.GetComponent<Renderer> ().bounds.size.x) < (transform.position.x + transform.GetComponent<Renderer> ().bounds.size.x) &&
 		    grounded) {
-			Debug.Log ("yoloswag");
+			Debug.Log ("DOG DOES JUMP");
 //			enemyRigidbody.AddForce(new Vector2(0, 0.2f));
-			enemyRigidbody.velocity = new Vector2 (enemyRigidbody.velocity.x, 5f);
+			animator.SetBool("isJumping", true);
+			enemyRigidbody.velocity = new Vector2 (enemyRigidbody.velocity.x, 6.5f);
 		}
 	}
 	void OnTriggerEnter2D(Collider2D other){
