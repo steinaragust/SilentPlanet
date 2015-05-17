@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class EnemyPatrol : MonoBehaviour {
-
+	public float xScaleFactor;
+	public float yScaleFactor;
 	public float moveSpeed;
 	public bool moveRight;
 
@@ -47,13 +48,13 @@ public class EnemyPatrol : MonoBehaviour {
 		if (moveRight) {
 //			Debug.Log ("moving right");
 //			Debug.Log ("speed of: " + gameObject.name + ": " + GetComponent<Rigidbody2D>().velocity.x);
-			transform.localScale = new Vector3(-1f, 1f, 1f);
+			transform.localScale = new Vector3(-xScaleFactor, yScaleFactor, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		} 
 		else {
 //			Debug.Log ("moving left");
 //			Debug.Log ("speed of: " + gameObject.name + ": " + GetComponent<Rigidbody2D>().velocity.x);
-			transform.localScale = new Vector3(1f, 1f, 1f);
+			transform.localScale = new Vector3(xScaleFactor, yScaleFactor, 1f);
 			GetComponent<Rigidbody2D> ().velocity = new Vector2 (-moveSpeed, GetComponent<Rigidbody2D> ().velocity.y);
 		}
 	}

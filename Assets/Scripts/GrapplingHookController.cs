@@ -26,7 +26,7 @@ public class GrapplingHookController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (pScript.isGrappled) {
+		/*if (pScript.isGrappled) {
 			//pScript.playerRigidBody.fixedAngle = false;
 			float tiltAroundZ = Input.GetAxis ("Horizontal") * tiltAngle;
 			Quaternion target2 = Quaternion.Euler (0, 0, tiltAroundZ);
@@ -35,7 +35,7 @@ public class GrapplingHookController : MonoBehaviour {
 		else {
 			Quaternion target = Quaternion.Euler(0, 0, 0);
 			pScript.transform.rotation = Quaternion.Slerp(pScript.transform.rotation, target, Time.deltaTime * afterGrappleSmooth);
-		}
+		}*/
 		
 		if (useGamepad) {
 			// ROTATE A GUN OBJECT AROUND THE Z-AXIS
