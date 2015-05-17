@@ -24,7 +24,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 216.899994, y: -1.48000002, z: 0}
+  m_LocalPosition: {x: 210.463928, y: 39.3281403, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -41,7 +41,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damping: .100000001
-  crosshairColor: {r: 1, g: 1, b: 1, a: 1}
+  crosshairColor: {r: .905882359, g: .850980401, b: .0862745121, a: 1}
+  grappledCrosshairColor: {r: 1, g: 0, b: .132352829, a: 0}
 --- !u!212 &21290606
 SpriteRenderer:
   m_ObjectHideFlags: 1
