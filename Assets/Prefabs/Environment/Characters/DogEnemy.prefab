@@ -40,13 +40,13 @@ GameObject:
   - 4: {fileID: 454360}
   - 212: {fileID: 21278746}
   - 50: {fileID: 5071578}
-  - 61: {fileID: 6127314}
-  - 61: {fileID: 6194532}
   - 114: {fileID: 11420692}
   - 114: {fileID: 11470118}
   - 60: {fileID: 6059126}
   - 60: {fileID: 6022504}
   - 95: {fileID: 9576146}
+  - 61: {fileID: 6172326}
+  - 61: {fileID: 6179780}
   m_Layer: 9
   m_Name: DogEnemy
   m_TagString: Untagged
@@ -88,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147752}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 127.080002, y: 42.1259995, z: 0}
+  m_LocalPosition: {x: 313.5, y: 62.4000015, z: 0}
   m_LocalScale: {x: 2.25, y: 2.25, z: 2.25}
   m_Children:
   - {fileID: 470708}
@@ -141,7 +141,7 @@ PolygonCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147752}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
@@ -173,7 +173,7 @@ PolygonCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147752}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
@@ -199,32 +199,32 @@ PolygonCollider2D:
     - - {x: .368808329, y: -.149590388}
       - {x: -.238945857, y: -.000573052326}
       - {x: -.537923157, y: -.356689453}
---- !u!61 &6127314
+--- !u!61 &6172326
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147752}
-  m_Enabled: 0
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 1.22000003, y: 1.01999998}
---- !u!61 &6194532
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 147752}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -.132988825}
   serializedVersion: 2
-  m_Size: {x: .983333349, y: 1.16666663}
+  m_Size: {x: 1.61000001, y: .91402328}
+--- !u!61 &6179780
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147752}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: -.132988825}
+  serializedVersion: 2
+  m_Size: {x: 1.61000001, y: .91402328}
 --- !u!95 &9576146
 Animator:
   serializedVersion: 3
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyScaling: 2.25
   moveSpeed: 2
-  moveRight: 0
+  moveRight: 1
   wallCheck: {fileID: 470708}
   wallCheckRadius: .100000001
   WhatIsWall:
@@ -290,6 +290,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   grounded: 0
+  isChasing: 0
 --- !u!212 &21278746
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -312,8 +313,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 404910065
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 5f8163b140af2a74db6b38a1b459ba10, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
