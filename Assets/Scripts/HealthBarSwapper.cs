@@ -14,6 +14,7 @@ public class HealthBarSwapper : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		maxPlayerHealth = PlayerPrefs.GetInt ("PlayerCurrentLives");
 		playerScript = GameObject.Find ("Player_Bird").GetComponent<Player_Script>();
 		image = GetComponent<Image> ();
 		playerHealth = maxPlayerHealth;
@@ -44,7 +45,9 @@ public class HealthBarSwapper : MonoBehaviour {
 	}
 
 	public void IncreaseMaxHealth(){
-		maxPlayerHealth++;
+//		maxPlayerHealth++;
+		PlayerPrefs.SetInt ("PlayerCurrentLives", (maxPlayerHealth + 1));
+		maxPlayerHealth = maxPlayerHealth + 1;
 		playerHealth = maxPlayerHealth;
 		updateHud ();
 	}

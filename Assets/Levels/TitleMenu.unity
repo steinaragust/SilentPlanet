@@ -322,7 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fadf9e47f17c464782bd0cb4409784c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startLevel: AlphaLevel
+  playerLives: 3
+  startLevel: Official Level
 --- !u!1 &861089719
 GameObject:
   m_ObjectHideFlags: 0

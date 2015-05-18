@@ -10,4 +10,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Levels/AlphaLevel.unity
   - enabled: 1
-    path: Assets/Levels/TestLevel.unity
+    path: Assets/Levels/Official Level.unity

@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 471068}
   - 212: {fileID: 21277118}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: Portal_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 419980}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: Portal Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - 212: {fileID: 21240906}
   - 61: {fileID: 6149082}
   - 114: {fileID: 11445676}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: Portal_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 693.900024, y: 69.8000031, z: 0}
+  m_LocalPosition: {x: 285, y: 88.1999969, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 424714}
@@ -70,7 +70,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 172352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.55999994, y: -6.07999992, z: 0}
+  m_LocalPosition: {x: -27.1000004, y: -16.8999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419980}
@@ -82,7 +82,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127858}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.4200001, y: .280000001, z: 0}
+  m_LocalPosition: {x: 21.3400002, y: 1.78999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419980}
