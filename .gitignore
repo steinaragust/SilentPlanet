@@ -6,10 +6,6 @@
 [Oo]bj/
 [Bb]uild/
 *_Data/
-Assets/IgnoredScenes/*.unity
-Assets/IgnoredScenes/*.unity.meta
-Assets/Levels/*.unity
-Assets/Levels/*.unity.meta
 
 #random shit
 Thumbs.db
